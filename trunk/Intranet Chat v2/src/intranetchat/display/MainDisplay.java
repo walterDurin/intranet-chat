@@ -405,7 +405,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
             minute = "0"+minute;
         }
         if(second.length() < 2){
-            second = "0"+minute;
+            second = "0"+second;
         }
         return hour+":"+minute+":"+second;
     }
