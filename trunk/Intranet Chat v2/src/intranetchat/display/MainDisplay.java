@@ -19,7 +19,6 @@ import intranetchat.core.Users;
 import intranetchat.saving.SavedValues;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.io.IOException;
 import java.util.Calendar;
@@ -47,12 +46,11 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     Image icon;
     private StringBuffer log;
     UserCollection userscol;
-    Calendar calendar;
 
     /** Creates new form MainDisplay */
     public MainDisplay(Observable obs, NetworkInterface n) {
         userscol = UserCollection.getInstance();
-        calendar = new GregorianCalendar();
+        
         list = new DefaultListModel();
         log = new StringBuffer("");
         try {
@@ -396,10 +394,11 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     }
 
     private String getTime(){
+        Calendar calendar = new GregorianCalendar();
         int hour = calendar.get(Calendar.HOUR);
         int minute = calendar.get(Calendar.MINUTE);
         int second = calendar.get(Calendar.SECOND);
-        if(calendar.get(calendar.AM_PM)== calendar.PM){
+        if(calendar.get(Calendar.AM_PM)== Calendar.PM){
             hour = hour + 12;
         }
         return hour+":"+minute+":"+second;
