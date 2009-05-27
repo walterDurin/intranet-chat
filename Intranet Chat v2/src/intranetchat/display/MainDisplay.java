@@ -117,12 +117,13 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jScrollPane1.setMinimumSize(new java.awt.Dimension(25, 25));
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(250, 350));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(500, 350));
 
         incomingData.setColumns(20);
         incomingData.setEditable(false);
         incomingData.setLineWrap(true);
         incomingData.setRows(5);
+        incomingData.setWrapStyleWord(true);
         incomingData.setMinimumSize(new java.awt.Dimension(100, 150));
         incomingData.setPreferredSize(new java.awt.Dimension(230, 330));
         jScrollPane1.setViewportView(incomingData);
@@ -398,7 +399,9 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         int hour = calendar.get(Calendar.HOUR);
         int minute = calendar.get(Calendar.MINUTE);
         int second = calendar.get(Calendar.SECOND);
-
+        if(calendar.get(calendar.AM_PM)== calendar.PM){
+            hour = hour + 12;
+        }
         return hour+":"+minute+":"+second;
     }
 
