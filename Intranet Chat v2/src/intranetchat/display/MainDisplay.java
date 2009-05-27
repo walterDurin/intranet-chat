@@ -394,12 +394,18 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     }
 
     private String getTime(){
-        Calendar calendar = new GregorianCalendar();
+        Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR);
-        int minute = calendar.get(Calendar.MINUTE);
-        int second = calendar.get(Calendar.SECOND);
+        String minute = calendar.get(Calendar.MINUTE)+"";
+        String second = calendar.get(Calendar.SECOND)+"";
         if(calendar.get(Calendar.AM_PM)== Calendar.PM){
             hour = hour + 12;
+        }
+        if(minute.length() < 2){
+            minute = "0"+minute;
+        }
+        if(second.length() < 2){
+            second = "0"+minute;
         }
         return hour+":"+minute+":"+second;
     }
