@@ -45,7 +45,7 @@ public class SavedValues extends Observable {
         writer = new WriteFiles();
         port = 5454;
         networkID = 0000000;
-        networkName = "[new user]";
+        networkName = "new user";
         x = 200;
         y = 200;
         background = Color.WHITE;
