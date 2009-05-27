@@ -43,6 +43,26 @@ public class UserCollection {
         return -1;
     }
 
+    public boolean userExists(String id){
+        for(int i = 0 ; i < userCollection.size(); i++ ){
+            if(userCollection.get(i).getNetworkID().compareTo(id) == 0){
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    public int replaceUsername(String id, String name){
+        for(int i = 0 ; i < userCollection.size(); i++ ){
+            if(userCollection.get(i).getNetworkID().compareTo(id) == 0){
+                userCollection.get(i).setUsername(name);
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public Users getUser(int i){
         return userCollection.get(i);
     }

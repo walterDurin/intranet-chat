@@ -123,7 +123,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         incomingData.setRows(5);
         incomingData.setWrapStyleWord(true);
         incomingData.setMinimumSize(new java.awt.Dimension(100, 150));
-        incomingData.setPreferredSize(new java.awt.Dimension(230, 330));
+        incomingData.setPreferredSize(new java.awt.Dimension(100, 100));
         jScrollPane1.setViewportView(incomingData);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -274,6 +274,9 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
             if(s != null){
                 values.networkName = s;
                 values.ValuesChanged();
+                try{
+                network.sendMulticast("2~"+values.networkName+"~2~");
+                }catch(IOException e){}
             }
         }
     }//GEN-LAST:event_userNameMouseClicked
@@ -368,9 +371,14 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                     break;
 
                 case 2:
-                    Users s = new Users(breakup[2],breakup[0]);
-                    userscol.addUser(s);
-                    list.addElement(breakup[2]);
+                    if(userscol.userExists(breakup[0])){
+                        int k = userscol.replaceUsername(breakup[0], breakup[2]);
+                        list.set(k, breakup[2]);
+                    }else{
+                        Users s = new Users(breakup[2],breakup[0]);
+                        userscol.addUser(s);
+                        list.addElement(breakup[2]);
+                    }
                     break;
 
                 case 3:
