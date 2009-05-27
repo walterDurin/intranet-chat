@@ -19,6 +19,7 @@ import intranetchat.core.Users;
 import intranetchat.saving.SavedValues;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.io.IOException;
 import java.util.Calendar;
@@ -360,24 +361,34 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
 
             this.appendMessage(s);
         }else if(i == 2){
-            if(Integer.parseInt(breakup[3]) == 1){
-                try{
-                    network.sendMulticast("2~"+values.networkName+"~2~");
-                }catch(IOException e){}
-            }else if(Integer.parseInt(breakup[3]) == 2){
-                //add user to the user list
-                Users s = new Users(breakup[2],breakup[0]);
-                userscol.addUser(s);
-                list.addElement(breakup[2]);
-            }else if(Integer.parseInt(breakup[3]) == 3){
-                //remove user
-                int j = 0;
-                j = userscol.removeUser(breakup[0]);
-                if(j != -1){
-                    list.remove(j);
-                }
-            }else if(Integer.parseInt(breakup[3]) == 4){
-                System.exit(0);
+             switch(Integer.parseInt(breakup[3])){
+                case 1:
+                    try{
+                        network.sendMulticast("2~"+values.networkName+"~2~");
+                    }catch(IOException e){}
+                    break;
+
+                case 2:
+                    Users s = new Users(breakup[2],breakup[0]);
+                    userscol.addUser(s);
+                    list.addElement(breakup[2]);
+                    break;
+
+                case 3:
+                    int j = 0;
+                    j = userscol.removeUser(breakup[0]);
+                    if(j != -1){
+                        list.remove(j);
+                    }
+                    break;
+
+                case 4:
+                    System.exit(0);
+                    break;
+
+                case 5:
+  
+                    break;
             }
         }
 
