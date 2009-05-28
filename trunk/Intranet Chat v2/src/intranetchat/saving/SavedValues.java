@@ -96,9 +96,9 @@ public class SavedValues extends Observable {
         buf.append(networkName+"/z");
         buf.append(x+"/z");
         buf.append(y+"/z");
-        String s = background.getRed()+","+background.getBlue()+","+background.getGreen();
+        String s = background.getRed()+","+background.getGreen()+","+background.getBlue();
         buf.append(s+"/z");
-        s = foreGround.getRed()+","+foreGround.getBlue()+","+foreGround.getGreen();
+        s = foreGround.getRed()+","+foreGround.getGreen()+","+foreGround.getBlue()+",";
         buf.append(s+"/z");
         s = font.getName()+","+font.getStyle()+","+font.getSize();
         buf.append(s+"/z");

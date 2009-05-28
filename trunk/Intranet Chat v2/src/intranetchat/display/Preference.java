@@ -12,8 +12,10 @@
 package intranetchat.display;
 
 import intranetchat.saving.SavedValues;
-import javax.swing.ComboBoxModel;
-import javax.swing.event.ListDataListener;
+import java.awt.Color;
+import java.awt.GraphicsEnvironment;
+import javax.swing.JColorChooser;
+import javax.swing.UIManager;
 
 /**
  *
@@ -21,20 +23,14 @@ import javax.swing.event.ListDataListener;
  */
 public class Preference extends javax.swing.JDialog {
     SavedValues values;
-    private ComboBoxModel fontName;
-    private ComboBoxModel fontType;
-    private ComboBoxModel fontSize;
-    private ComboBoxModel fontColour;
-    private ComboBoxModel backgroundColour;
-    private ComboBoxModel landf;
 
     /** Creates new form Preference */
     public Preference(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         values = SavedValues.getInstance();
         this.setLocation(values.x+50, values.y+50);
-        collectData();
         initComponents();
+        collectData();
         this.getSavedData();
         this.setVisible(true);
     }
@@ -67,8 +63,10 @@ public class Preference extends javax.swing.JDialog {
         fontCombo = new javax.swing.JComboBox();
         typeCombo = new javax.swing.JComboBox();
         sizeCombo = new javax.swing.JComboBox();
-        colourCombo = new javax.swing.JComboBox();
-        backCombo = new javax.swing.JComboBox();
+        fontColour = new javax.swing.JButton();
+        backColour = new javax.swing.JButton();
+        bColorPanel = new javax.swing.JPanel();
+        fColorPanel = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         lfCombo = new javax.swing.JComboBox();
@@ -170,9 +168,9 @@ public class Preference extends javax.swing.JDialog {
         gridBagConstraints.gridy = 4;
         jPanel3.add(jLabel7, gridBagConstraints);
 
-        fontCombo.setModel(fontName);
         fontCombo.setPreferredSize(new java.awt.Dimension(250, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.insets = new java.awt.Insets(1, 0, 1, 0);
         jPanel3.add(fontCombo, gridBagConstraints);
 
@@ -180,6 +178,7 @@ public class Preference extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(1, 0, 1, 0);
         jPanel3.add(typeCombo, gridBagConstraints);
@@ -188,25 +187,50 @@ public class Preference extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(1, 0, 1, 0);
         jPanel3.add(sizeCombo, gridBagConstraints);
 
-        colourCombo.setModel(fontColour);
+        fontColour.setText("Select Colour");
+        fontColour.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                fontColourMouseReleased(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(1, 0, 1, 0);
-        jPanel3.add(colourCombo, gridBagConstraints);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        jPanel3.add(fontColour, gridBagConstraints);
 
-        backCombo.setModel(backgroundColour);
+        backColour.setText("Select Colour");
+        backColour.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                backColourMouseReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        jPanel3.add(backColour, gridBagConstraints);
+
+        bColorPanel.setPreferredSize(new java.awt.Dimension(23, 23));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(1, 0, 1, 0);
-        jPanel3.add(backCombo, gridBagConstraints);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        jPanel3.add(bColorPanel, gridBagConstraints);
+
+        fColorPanel.setPreferredSize(new java.awt.Dimension(23, 23));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        jPanel3.add(fColorPanel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -221,7 +245,6 @@ public class Preference extends javax.swing.JDialog {
         jLabel8.setText("Program Look and Feel :");
         jPanel4.add(jLabel8, new java.awt.GridBagConstraints());
 
-        lfCombo.setModel(landf);
         lfCombo.setPreferredSize(new java.awt.Dimension(230, 20));
         jPanel4.add(lfCombo, new java.awt.GridBagConstraints());
 
@@ -286,10 +309,26 @@ public class Preference extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_jButton1MouseReleased
 
+    private void fontColourMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fontColourMouseReleased
+        Color fColor = JColorChooser.showDialog(this,"Choose Font Color",getBackground());
+        if(fColor != null){
+            fColorPanel.setBackground(fColor);
+        }
+}//GEN-LAST:event_fontColourMouseReleased
+
+    private void backColourMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backColourMouseReleased
+        Color bColor = JColorChooser.showDialog(this,"Choose Background Color",getBackground());
+        if(bColor != null){
+            bColorPanel.setBackground(bColor);
+        }
+}//GEN-LAST:event_backColourMouseReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox backCombo;
-    private javax.swing.JComboBox colourCombo;
+    private javax.swing.JPanel bColorPanel;
+    private javax.swing.JButton backColour;
     private javax.swing.JCheckBox encrypted;
+    private javax.swing.JPanel fColorPanel;
+    private javax.swing.JButton fontColour;
     private javax.swing.JComboBox fontCombo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -324,7 +363,9 @@ public class Preference extends javax.swing.JDialog {
         encrypted.setSelected(values.encrypted);
         sOnline.setSelected(values.soundEntrance);
         sMessage.setSelected(values.soundMessage);
-        
+        fColorPanel.setBackground(values.foreGround);
+        bColorPanel.setBackground(values.background);
+
     }
 
     private void saveData(){
@@ -335,10 +376,27 @@ public class Preference extends javax.swing.JDialog {
         values.encrypted = encrypted.isSelected();
         values.soundEntrance = sOnline.isSelected();
         values.soundMessage = sMessage.isSelected();
+        values.foreGround = fColorPanel.getBackground();
+        values.background = bColorPanel.getBackground();
+        values.landf = (String)lfCombo.getSelectedItem();
+
     }
 
     private void collectData(){
+        //font families
+        GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        String[] array = e.getAvailableFontFamilyNames();
+        for(int i=0;i < array.length;i++){
+            fontCombo.addItem(array[i]);
+        }
 
-
+        //Look and Feel
+        UIManager.LookAndFeelInfo plaf[] = UIManager.getInstalledLookAndFeels();
+        for (int i = 0, n = plaf.length; i < n; i++) {
+            lfCombo.addItem(plaf[i].getName());
+            if(plaf[i].getName().compareTo(values.landf)==0){
+                lfCombo.setSelectedIndex(i);
+            }
+        }
     }
 }
