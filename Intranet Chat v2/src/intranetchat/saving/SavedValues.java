@@ -145,4 +145,8 @@ public class SavedValues extends Observable {
 
     }
 
+    public void saveLog(String path, String log){
+        writer.writeFile(path, log);
+    }
+
 }

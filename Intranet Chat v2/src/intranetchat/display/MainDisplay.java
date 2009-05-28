@@ -272,6 +272,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_AboutMouseReleased
 
     private void exitMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseReleased
+        this.saving();
         System.exit(0);
     }//GEN-LAST:event_exitMouseReleased
 
@@ -320,7 +321,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     public void appendMessage(String message) {
         incomingData.append(message);
         incomingData.setCaretPosition(incomingData.getDocument().getLength());
-        log.append(message+"\n");
+        log.append(message);
     }
 
     /**
@@ -436,6 +437,16 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         return "["+h+":"+minute+":"+second+"]";
     }
 
+    private String getTimeStamp(){
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        int hour = calendar.get(Calendar.HOUR);
+        int minute = calendar.get(Calendar.MINUTE);
+        return day+""+month+""+year+""+hour+""+minute;
+    }
+
     /**
      * Updates the saved data variables so that they can be saved to a file
      */
@@ -500,7 +511,14 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     }
 
     public void saving(){
-        values.importValues(SavedValues.DEFAULT_PATH);
+        values.networkName = userName.getText();
+        values.exportValues(SavedValues.DEFAULT_PATH);
+        try{
+        network.sendMulticast("2~"+values.networkName+"~3~");
+        }catch(IOException ex){}
+        if(values.publicLog){
+            values.saveLog("log\\"+this.getTimeStamp()+"Public.txt", new String(log));
+        }
     }
 
 }
