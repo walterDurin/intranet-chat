@@ -26,7 +26,7 @@ public class NetworkListener extends Observable implements Runnable{
             String s = network.recieveMulticast();
             this.messageRecieved(s);
             try{
-                Thread.sleep(1000);
+                Thread.sleep(10);
             }catch(InterruptedException ex){ }
         }
     }
