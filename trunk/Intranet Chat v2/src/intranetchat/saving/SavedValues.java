@@ -15,6 +15,7 @@ import java.util.Observable;
  * @author Philip White
  */
 public class SavedValues extends Observable {
+    public static final String DEFAULT_PATH = "inc.conf";
     private static SavedValues instance;
     private ReadFiles reader;
     private WriteFiles writer;

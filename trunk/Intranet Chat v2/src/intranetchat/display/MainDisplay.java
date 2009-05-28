@@ -43,11 +43,13 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     PrivateChatCollection privateChats;
     NetworkInterface network;
     Image icon;
+    public boolean traySupported;
     private StringBuffer log;
     UserCollection userscol;
 
     /** Creates new form MainDisplay */
     public MainDisplay(Observable obs, NetworkInterface n) {
+        traySupported = true;
         userscol = UserCollection.getInstance();
         list = new DefaultListModel();
         log = new StringBuffer("");
@@ -104,7 +106,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         jMenu3 = new javax.swing.JMenu();
         About = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("IntraNet Chat");
         setIconImage(icon);
         setName("IntraNet Chat"); // NOI18N
@@ -495,6 +497,10 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                 }
             }
         }
+    }
+
+    public void saving(){
+        values.importValues(SavedValues.DEFAULT_PATH);
     }
 
 }
