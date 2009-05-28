@@ -18,6 +18,7 @@ import intranetchat.saving.SavedValues;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JOptionPane;
@@ -33,16 +34,20 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     private String destinationName;
     private SavedValues values;
     private NetworkInterface network;
-
+    private StringBuffer log;
+    PrivateChatCollection parent;
     /** Creates new form PrivateChat */
-    public PrivateChat(Observable obs, String id, String name, PrivateChatCollection parent) {
+    public PrivateChat(Observable obs, String id, String name, PrivateChatCollection p) {
         values = SavedValues.getInstance();
         network = NetworkInterface.getInstance();
         observable = obs;
         observable.addObserver(this);
         destinationID = id;
         destinationName = name;
+        parent = p;
+        log = new StringBuffer("");
         this.setTitle(destinationName);
+        this.setTitle("Private Chat with "+destinationName);
         initComponents();
         this.setVisible(true);
     }
@@ -181,10 +186,15 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     public void update(Observable o, Object arg) {
         if(o instanceof NetworkListener){
             NetworkListener list = (NetworkListener)o;
-            String s = list.getMessage();
+            sortMessage(list.getMessage());
         }else if(o instanceof SavedValues){
             this.updateSettings();
         }
+    }
+
+    private void appendMessage(String message){
+        jTextArea1.append(message);
+        log.append(message);
     }
 
     private void sendMessage(){
@@ -204,8 +214,20 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
      * Sorts the message and updates the screen if required
      * @param input incoming message
      */
-    private void sortMessage(String input){
-        
+    public void sortMessage(String input){
+        String[] mes = input.split("~");
+        if(Integer.parseInt(mes[1]) == 3){
+            if(Integer.parseInt(mes[2]) == values.networkID){
+                if(mes[0].compareTo(destinationID)==0){
+                    if(mes[4].compareTo(destinationName)!=0){
+                        destinationName = mes[4];
+                        this.setTitle("Private Chat with "+destinationName);
+                    }
+                    this.appendMessage(getTime()+": "+destinationName+" : "+mes[4]+"\n");
+                }
+            }
+        }
+
     }
     /**
      * Updates the saved data variables so that they can be saved to a file
@@ -244,11 +266,46 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         jTextField1.setForeground(c);
     }
 
+        private String getTime(){
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR);
+        String minute = calendar.get(Calendar.MINUTE)+"";
+        String second = calendar.get(Calendar.SECOND)+"";
+        if(calendar.get(Calendar.AM_PM)== Calendar.PM){
+            hour = hour + 12;
+        }
+        String h = hour+"";
+        if(h.length() < 2){
+            h = "0"+h;
+        }
+        if(minute.length() < 2){
+            minute = "0"+minute;
+        }
+        if(second.length() < 2){
+            second = "0"+second;
+        }
+        return "["+h+":"+minute+":"+second+"]";
+    }
+
+    private String getTimeStamp(){
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        int hour = calendar.get(Calendar.HOUR);
+        int minute = calendar.get(Calendar.MINUTE);
+        return day+""+month+""+year+""+hour+""+minute;
+    }
+
     /**
      * This will shut down the private chat correctly and remove it from the list
      * of chats
      */
     private void exitConversation(){
-        
+        if(values.privateLog){
+            values.saveLog("log\\"+this.getTimeStamp()+destinationName+".txt", new String(log));
+        }
+        this.setVisible(false);
+        parent.removePrivateChat(destinationID);
     }
 }

@@ -39,6 +39,14 @@ public class PrivateChatCollection implements Observer{
     public void startNewPrivateChat(String destinationID, String destinationName){
         PrivateChat chat = new PrivateChat(observable,destinationID,destinationName,this);
         privateChat.add(chat);
+
+    }
+
+    public void startNewPrivateChat(String destinationID, String destinationName, String message){
+        PrivateChat chat = new PrivateChat(observable,destinationID,destinationName,this);
+        chat.sortMessage(message);
+        privateChat.add(chat);
+
     }
 
     public void removePrivateChat(String DestinationID){
@@ -57,9 +65,8 @@ public class PrivateChatCollection implements Observer{
             if(Integer.parseInt(mes[1])== 3){
                 System.out.println("private message received");
                 if(Integer.parseInt(mes[2]) == values.networkID){
-                    System.out.println("its for me");
                     if(!chatExists(mes[0])){
-                        startNewPrivateChat(mes[0],mes[3]);
+                        startNewPrivateChat(mes[0],mes[3],list.getMessage());
                     }
                 }
             }
