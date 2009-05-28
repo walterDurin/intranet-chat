@@ -7,17 +7,18 @@ package intranetchat.core;
 
 import java.util.ArrayList;
 
+
 /**
  *
  * @author Philip
  */
-public class UserCollection {
+public class UserCollection{
     private ArrayList<Users> userCollection;
     private static volatile UserCollection instance;
 
-
     private UserCollection (){
         userCollection = new ArrayList<Users>();
+ 
     }
 
     public static synchronized UserCollection getInstance(){
