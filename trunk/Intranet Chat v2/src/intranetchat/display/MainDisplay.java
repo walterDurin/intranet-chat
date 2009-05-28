@@ -22,7 +22,6 @@ import java.awt.Font;
 import java.awt.Image;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.DefaultListModel;
@@ -50,7 +49,6 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     /** Creates new form MainDisplay */
     public MainDisplay(Observable obs, NetworkInterface n) {
         userscol = UserCollection.getInstance();
-        
         list = new DefaultListModel();
         log = new StringBuffer("");
         try {
@@ -114,22 +112,23 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setAutoscrolls(true);
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(500, 350));
         jScrollPane1.setMinimumSize(new java.awt.Dimension(25, 25));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(500, 350));
 
         incomingData.setColumns(20);
         incomingData.setEditable(false);
-        incomingData.setLineWrap(true);
         incomingData.setRows(5);
         incomingData.setWrapStyleWord(true);
-        incomingData.setMinimumSize(new java.awt.Dimension(100, 150));
-        incomingData.setPreferredSize(new java.awt.Dimension(100, 100));
         jScrollPane1.setViewportView(incomingData);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         jPanel2.add(jScrollPane1, gridBagConstraints);
 
@@ -151,6 +150,11 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         jScrollPane2.setPreferredSize(new java.awt.Dimension(125, 325));
 
         users.setModel(list);
+        users.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                usersMouseReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(users);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -197,6 +201,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         jMenu1.add(clearScreen);
 
         closeWindows.setText("Close Window");
+        closeWindows.setEnabled(false);
         closeWindows.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 closeWindowsMousePressed(evt);
@@ -275,11 +280,15 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                 values.networkName = s;
                 values.ValuesChanged();
                 try{
-                network.sendMulticast("2~"+values.networkName+"~2~");
+                    network.sendMulticast("2~"+values.networkName+"~2~");
                 }catch(IOException e){}
             }
         }
     }//GEN-LAST:event_userNameMouseClicked
+
+    private void usersMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersMouseReleased
+        //user wants to have a private chat with a mate
+    }//GEN-LAST:event_usersMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem About;
@@ -308,6 +317,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
      */
     public void appendMessage(String message) {
         incomingData.append(message);
+        incomingData.setCaretPosition(incomingData.getDocument().getLength());
         log.append(message+"\n");
     }
 
@@ -333,18 +343,18 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
      * network
      */
     private void sendMessage(){
-
         String message = outgoingData.getText();
-        outgoingData.setText("");
-        StringBuffer buf = new StringBuffer("1~");
-        buf.append(userName.getText()+"~");
-        buf.append(message+"~");
-        try{
-            network.sendMulticast(new String(buf));
-        }catch(IOException ex){
-            JOptionPane.showMessageDialog(this, "The message was unable to be sent please check the network connection", "Message Not Sent", JOptionPane.ERROR_MESSAGE);
+        if(message.length() > 0){
+            outgoingData.setText("");
+            StringBuffer buf = new StringBuffer("1~");
+            buf.append(userName.getText()+"~");
+            buf.append(message+"~");
+            try{
+                network.sendMulticast(new String(buf));
+            }catch(IOException ex){
+                JOptionPane.showMessageDialog(this, "The message was unable to be sent please check the network connection", "Message Not Sent", JOptionPane.ERROR_MESSAGE);
+            }
         }
-
     }
 
     /**
@@ -378,6 +388,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                         Users s = new Users(breakup[2],breakup[0]);
                         userscol.addUser(s);
                         list.addElement(breakup[2]);
+                        appendMessage(getTime()+": "+breakup[2]+" has joined \n");
                     }
                     break;
 
@@ -386,6 +397,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                     j = userscol.removeUser(breakup[0]);
                     if(j != -1){
                         list.remove(j);
+                        appendMessage(getTime()+": "+breakup[2]+" has left \n");
                     }
                     break;
 
@@ -409,13 +421,17 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         if(calendar.get(Calendar.AM_PM)== Calendar.PM){
             hour = hour + 12;
         }
+        String h = hour+"";
+        if(h.length() < 2){
+            h = "0"+h;
+        }
         if(minute.length() < 2){
             minute = "0"+minute;
         }
         if(second.length() < 2){
             second = "0"+second;
         }
-        return "["+hour+":"+minute+":"+second+"]";
+        return "["+h+":"+minute+":"+second+"]";
     }
 
     /**
