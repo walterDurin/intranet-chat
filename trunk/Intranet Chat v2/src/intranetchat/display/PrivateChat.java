@@ -13,6 +13,7 @@ package intranetchat.display;
 
 import intranetchat.core.NetworkInterface;
 import intranetchat.core.NetworkListener;
+import intranetchat.core.PrivateChatCollection;
 import intranetchat.saving.SavedValues;
 import java.awt.Color;
 import java.awt.Font;
@@ -34,7 +35,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     private NetworkInterface network;
 
     /** Creates new form PrivateChat */
-    public PrivateChat(Observable obs, String id, String name) {
+    public PrivateChat(Observable obs, String id, String name, PrivateChatCollection parent) {
         values = SavedValues.getInstance();
         network = NetworkInterface.getInstance();
         observable = obs;
@@ -43,6 +44,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         destinationName = name;
         this.setTitle(destinationName);
         initComponents();
+        this.setVisible(true);
     }
 
     /** This method is called from within the constructor to

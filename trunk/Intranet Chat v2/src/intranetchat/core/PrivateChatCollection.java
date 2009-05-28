@@ -6,6 +6,7 @@
 package intranetchat.core;
 
 import intranetchat.display.PrivateChat;
+import intranetchat.saving.SavedValues;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -18,6 +19,7 @@ public class PrivateChatCollection implements Observer{
     private static PrivateChatCollection instance;
     private ArrayList<PrivateChat> privateChat;
     private Observable observable;
+    private SavedValues values;
 
     public static synchronized PrivateChatCollection getInstance(Observable obs){
         if(instance == null){
@@ -28,16 +30,14 @@ public class PrivateChatCollection implements Observer{
 
     private PrivateChatCollection(Observable obs){
         privateChat = new ArrayList<PrivateChat>();
+        values = SavedValues.getInstance();
         observable = obs;
-
-    }
-
-    public void DeliverMessage(String[] message){
+        observable.addObserver(this);
 
     }
 
     public void startNewPrivateChat(String destinationID, String destinationName){
-        PrivateChat chat = new PrivateChat(observable,destinationID,destinationName);
+        PrivateChat chat = new PrivateChat(observable,destinationID,destinationName,this);
         privateChat.add(chat);
     }
 
@@ -45,12 +45,24 @@ public class PrivateChatCollection implements Observer{
 
     }
 
+    private boolean chatExists(String destinationID){
+        //TODO
+        return false;
+    }
     public void update(Observable o, Object arg) {
         if(o instanceof NetworkListener){
             NetworkListener list = (NetworkListener) o;
-            list.getMessage();
+            String[] mes = list.getMessage().split("~");
             //this will search for the id's presence in the collection
-
+            if(Integer.parseInt(mes[1])== 3){
+                System.out.println("private message received");
+                if(Integer.parseInt(mes[2]) == values.networkID){
+                    System.out.println("its for me");
+                    if(!chatExists(mes[0])){
+                        startNewPrivateChat(mes[0],mes[3]);
+                    }
+                }
+            }
         }
     }
 
