@@ -49,12 +49,24 @@ public class PrivateChatCollection implements Observer{
 
     }
 
-    public void removePrivateChat(String DestinationID){
-
+    public void removePrivateChat(String destinationID){
+        for(int i = 0 ;i < privateChat.size();i++){
+            String id = privateChat.get(i).destinationID;
+            if(id.compareTo(destinationID)==0){
+                privateChat.remove(i);
+                return;
+            }
+        }
     }
 
     private boolean chatExists(String destinationID){
-        //TODO
+        for(int i = 0 ;i < privateChat.size();i++){
+            String id = privateChat.get(i).destinationID;
+            if(id.compareTo(destinationID)==0){
+                privateChat.remove(i);
+                return true;
+            }
+        }
         return false;
     }
     public void update(Observable o, Object arg) {
