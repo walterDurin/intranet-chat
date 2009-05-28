@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
  */
 public class PrivateChat extends javax.swing.JFrame implements Observer{
     private Observable observable;
-    private String destinationID;
+    public String destinationID;
     private String destinationName;
     private SavedValues values;
     private NetworkInterface network;
@@ -47,7 +47,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         parent = p;
         log = new StringBuffer("");
         this.setTitle(destinationName);
-        this.setTitle("Private Chat with "+destinationName);
+        this.setTitle("Private Chat with "+destinationID);
         initComponents();
         this.setVisible(true);
     }
@@ -86,11 +86,13 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
 
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(280, 350));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(400, 350));
 
         jTextArea1.setColumns(20);
         jTextArea1.setEditable(false);
+        jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
+        jTextArea1.setWrapStyleWord(true);
         jScrollPane1.setViewportView(jTextArea1);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -98,10 +100,11 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         jPanel1.add(jScrollPane1, gridBagConstraints);
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(220, 20));
+        jTextField1.setPreferredSize(new java.awt.Dimension(335, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 3, 0);
         jPanel1.add(jTextField1, gridBagConstraints);
 
@@ -125,9 +128,19 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         jMenu1.setText("File");
 
         jMenuItem3.setText("Clear Screen");
+        jMenuItem3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jMenuItem3MouseReleased(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuItem4.setText("Close ");
+        jMenuItem4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jMenuItem4MouseReleased(evt);
+            }
+        });
         jMenu1.add(jMenuItem4);
 
         jMenuBar1.add(jMenu1);
@@ -135,6 +148,11 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         jMenu2.setText("Settings");
 
         jMenuItem1.setText("Preferences");
+        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jMenuItem1MouseReleased(evt);
+            }
+        });
         jMenu2.add(jMenuItem1);
 
         jMenuBar1.add(jMenu2);
@@ -142,6 +160,11 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         jMenu3.setText("Help");
 
         jMenuItem2.setText("About");
+        jMenuItem2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jMenuItem2MouseReleased(evt);
+            }
+        });
         jMenu3.add(jMenuItem2);
 
         jMenuBar1.add(jMenu3);
@@ -152,13 +175,30 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+        this.exitConversation();
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
         sendMessage();
         jTextField1.setText("");
     }//GEN-LAST:event_jButton1MouseReleased
+
+    private void jMenuItem1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseReleased
+        Preference prefs = new Preference(this,true);
+    }//GEN-LAST:event_jMenuItem1MouseReleased
+
+    private void jMenuItem2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MouseReleased
+        About about = new About(this,true);
+    }//GEN-LAST:event_jMenuItem2MouseReleased
+
+    private void jMenuItem3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem3MouseReleased
+        jTextArea1.setText("");
+        log.append("*** Screen Cleared *** \n");
+    }//GEN-LAST:event_jMenuItem3MouseReleased
+
+    private void jMenuItem4MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem4MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4MouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -220,7 +260,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
             if(Integer.parseInt(mes[2]) == values.networkID){
                 if(mes[0].compareTo(destinationID)==0){
                     if(mes[4].compareTo(destinationName)!=0){
-                        destinationName = mes[4];
+                        destinationName = mes[3];
                         this.setTitle("Private Chat with "+destinationName);
                     }
                     this.appendMessage(getTime()+": "+destinationName+" : "+mes[4]+"\n");
