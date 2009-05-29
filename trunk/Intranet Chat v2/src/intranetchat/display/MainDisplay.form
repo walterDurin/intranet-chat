@@ -20,7 +20,6 @@
             <MenuItem class="javax.swing.JMenuItem" name="closeWindows">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Close Window"/>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="closeWindowsMousePressed"/>
