@@ -58,7 +58,7 @@ public class Main {
             display.traySupported = false;
             return;
         }
-        icon = new TrayIcon(createImage("network.png", "tray icon"));
+        icon = new TrayIcon(createImage("icon.png", "tray icon"));
         PopupMenu menu = new PopupMenu();
         SystemTray tray = SystemTray.getSystemTray();
 

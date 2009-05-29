@@ -17,6 +17,7 @@ import intranetchat.core.PrivateChatCollection;
 import intranetchat.saving.SavedValues;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Observable;
@@ -104,6 +105,11 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         jPanel1.add(jScrollPane1, gridBagConstraints);
 
         jTextField1.setPreferredSize(new java.awt.Dimension(335, 20));
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -202,6 +208,12 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     private void jMenuItem4MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem4MouseReleased
         this.exitConversation();
     }//GEN-LAST:event_jMenuItem4MouseReleased
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            this.sendMessage();
+        }
+    }//GEN-LAST:event_jTextField1KeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

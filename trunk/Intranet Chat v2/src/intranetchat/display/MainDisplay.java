@@ -20,6 +20,7 @@ import intranetchat.saving.SavedValues;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.Calendar;
@@ -136,6 +137,11 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         jPanel2.add(jScrollPane1, gridBagConstraints);
 
         outgoingData.setPreferredSize(new java.awt.Dimension(10, 25));
+        outgoingData.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                outgoingDataKeyPressed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
@@ -257,6 +263,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
 
     private void clearScreenMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearScreenMousePressed
         incomingData.setText("");
+        log.append("*** Screen Cleared *** \n");
 }//GEN-LAST:event_clearScreenMousePressed
 
     private void closeWindowsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeWindowsMousePressed
@@ -302,6 +309,12 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
             }
         }
     }//GEN-LAST:event_usersMouseReleased
+
+    private void outgoingDataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_outgoingDataKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            this.sendMessage();
+        }
+    }//GEN-LAST:event_outgoingDataKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem About;
