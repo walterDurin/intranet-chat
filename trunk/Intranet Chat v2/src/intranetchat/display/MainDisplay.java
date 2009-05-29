@@ -20,6 +20,7 @@ import intranetchat.saving.SavedValues;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Observable;
@@ -291,6 +292,16 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
 
     private void usersMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersMouseReleased
         //user wants to have a private chat with a mate
+        if((evt.getClickCount() == 2)&&(evt.getButton() == MouseEvent.BUTTON1)){
+            int i = users.getSelectedIndex();
+            if(i != -1){
+                Users s = userscol.getUser(i);
+                if(s.getNetworkID().compareTo(values.networkName)!=0){
+                    System.out.println(s.getNetworkID()+" "+s.getUsername());
+                    privateChats.startNewPrivateChat(s.getNetworkID(), s.getUsername());
+                }
+            }
+        }
     }//GEN-LAST:event_usersMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
