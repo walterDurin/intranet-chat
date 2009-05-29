@@ -33,6 +33,14 @@ public class Main {
     SavedValues values;
     CheckboxMenuItem mute;
 
+    /**
+     * This method will start the entire program sequence
+     * first it loads the default saved values
+     * this is followed by checking to find a saved file in the filesystem
+     * after searching it is then added to the saved variables
+     * once completed the system tray is created and put in place
+     * then the network interface is started
+     */
     public Main () {
         values = SavedValues.getInstance();
         values.importValues(SavedValues.DEFAULT_PATH);
@@ -45,6 +53,12 @@ public class Main {
 
     }
 
+    /**
+     * creates the image for the system tray icon
+     * @param path path to the file
+     * @param descrip name of the file
+     * @return image for the tray icon
+     */
     private Image createImage(String path, String descrip) {
         URL url = Main.class.getResource(path);
         if(url != null){
@@ -53,15 +67,19 @@ public class Main {
         return null;
     }
 
+    /**
+     * This method creates a tray icon mounts all of the menus on it and then
+     * adds it to the system tray
+     */
     private void startTrayIcon(){
         if(!SystemTray.isSupported()){
             display.traySupported = false;
             return;
         }
-        icon = new TrayIcon(createImage("icon.png", "tray icon"));
+        icon = new TrayIcon(createImage("tray_clr.png", "tray icon"));
         PopupMenu menu = new PopupMenu();
         SystemTray tray = SystemTray.getSystemTray();
-
+        //creates all the menu items
         MenuItem about = new MenuItem("About");
         MenuItem pref = new MenuItem("Preferences");
         MenuItem open = new MenuItem("Show Chat");
@@ -70,6 +88,7 @@ public class Main {
         if(!(values.soundEntrance || values.soundMessage)){
             mute.setState(false);
         }
+        //adds the menu items to the system tray
         menu.add(open);
         menu.addSeparator();
         menu.add(about);
@@ -79,12 +98,13 @@ public class Main {
         menu.add(exit);
         icon.setPopupMenu(menu);
         icon.setImageAutoSize(true);
-
+        //mounts the system tray
         try{
             tray.add(icon);
         }catch(AWTException ex){
             return;
         }
+        //Sets the listeners for the tray commands
         icon.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 display.setVisible(true);
@@ -130,11 +150,13 @@ public class Main {
         
     }
 
+    //runs the display methods
     public void run(){
         display.setVisible(true);
     }
 
     /**
+     * Starts the full program
      * @param args the command line arguments
      */
     public static void main(String[] args) {

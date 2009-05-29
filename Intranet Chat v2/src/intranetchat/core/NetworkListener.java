@@ -10,8 +10,9 @@ import java.util.Observable;
 
 
 /**
- *
- * @author Philip
+ * This is the tread which is tasked with dealing with the incoming messages and
+ * informing all required observers that there is a message waiting
+ * @author Philip White
  */
 public class NetworkListener extends Observable implements Runnable{
     private NetworkInterface network;
@@ -20,6 +21,10 @@ public class NetworkListener extends Observable implements Runnable{
 
     }
 
+    /**
+     * creates an instance of a networkInterface and then is set into a constant
+     * loop to listen for messages
+     */
     public void run() {
         network = NetworkInterface.getInstance();
         while(true){
@@ -31,12 +36,21 @@ public class NetworkListener extends Observable implements Runnable{
         }
     }
 
+    /**
+     * this method will inform all observers that there is a message waiting
+     * to be looked at
+     * @param message the incoming message
+     */
     public void messageRecieved(String message){
         incoming = message;
         this.setChanged();
         this.notifyObservers();
     }
 
+    /**
+     * returns the message that was last picked up
+     * @return the incoming message
+     */
     public String getMessage(){
         return incoming;
     }

@@ -13,8 +13,10 @@ import java.net.MulticastSocket;
 import java.util.Random;
 
 /**
- *
- * @author Philip
+ * This is the network interface that deals with all network commands from the
+ * rest of the program
+ * @author Philip White
+ * @version 1.0
  */
 public class NetworkInterface {
     private volatile static NetworkInterface instance;
@@ -25,7 +27,10 @@ public class NetworkInterface {
 
     SavedValues saved;
 
-
+    /**
+     * Static instance creator that creates a singleton
+     * @return
+     */
     public static synchronized NetworkInterface getInstance(){
         if(instance == null){
             instance = new NetworkInterface();
@@ -33,6 +38,10 @@ public class NetworkInterface {
         return instance;
     }
 
+    /**
+     * private constructor so that only the class itself can create an instance
+     * of its self
+     */
     private NetworkInterface(){
         Random r = new Random();
         networkID = r.nextInt(1000000);
@@ -49,12 +58,21 @@ public class NetworkInterface {
         }
     }
 
+    /**
+     * This sends a message via a multicast link
+     * @param message message being sent
+     * @throws java.io.IOException thrown if the connection has failed and the
+     * message can't be sent
+     */
     public void sendMulticast(String message)throws IOException{
         String trans = networkID+"~"+message;
         DatagramPacket dp = new DatagramPacket(trans.getBytes(),trans.getBytes().length,group,portNum);
         ms.send(dp);
     }
 
+    /**
+     * this method allows the program to leave the multicast group
+     */
     public void leaveMulticastGroup(){
         try {
             ms.leaveGroup(group);
@@ -62,6 +80,10 @@ public class NetworkInterface {
         }
     }
 
+    /**
+     * waits until a message is recieved and then returns the message
+     * @return the incoming message
+     */
     public String recieveMulticast(){
         byte[] bytes = new byte[5000];
         DatagramPacket dp = new DatagramPacket(bytes, bytes.length);
@@ -75,6 +97,10 @@ public class NetworkInterface {
         return s;
     }
 
+    /**
+     * returns the unique network id for the current session
+     * @return the networkID
+     */
     public int getID(){
         return networkID;
     }

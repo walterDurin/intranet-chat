@@ -189,6 +189,8 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
 
     private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
         sendMessage();
+        String s = getTime()+": "+values.networkName+" : "+jTextField1.getText()+"\n";
+        this.appendMessage(s);
         jTextField1.setText("");
     }//GEN-LAST:event_jButton1MouseReleased
 
