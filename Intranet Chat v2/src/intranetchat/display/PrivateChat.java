@@ -36,6 +36,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     private NetworkInterface network;
     private StringBuffer log;
     PrivateChatCollection parent;
+    
     /** Creates new form PrivateChat */
     public PrivateChat(Observable obs, String id, String name, PrivateChatCollection p) {
         values = SavedValues.getInstance();
@@ -47,7 +48,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         parent = p;
         log = new StringBuffer("");
         this.setTitle(destinationName);
-        this.setTitle("Private Chat with "+destinationID);
+        this.setTitle("Private Chat with "+destinationName);
         initComponents();
         this.setVisible(true);
     }
