@@ -204,7 +204,6 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         jMenu1.add(clearScreen);
 
         closeWindows.setText("Close Window");
-        closeWindows.setEnabled(false);
         closeWindows.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 closeWindowsMousePressed(evt);
