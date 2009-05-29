@@ -22,6 +22,8 @@ import java.util.Calendar;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 /**
  *
@@ -198,7 +200,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_jMenuItem3MouseReleased
 
     private void jMenuItem4MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem4MouseReleased
-        // TODO add your handling code here:
+        this.exitConversation();
     }//GEN-LAST:event_jMenuItem4MouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -277,7 +279,10 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         this.setFontType(values.font);
         this.setBackgroundColour(values.background);
         this.setForegroundColour(values.foreGround);
+        this.setDisplayLF(values.landf);
     }
+
+
 
     /**
      * Sets the font that is being used by the gui
@@ -348,5 +353,24 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         }
         this.setVisible(false);
         parent.removePrivateChat(destinationID);
+    }
+
+    /**
+     * Changes the look and feel of the privateChat and all option panes
+     * linked to it
+     * @param name name of the selected look and feel
+     */
+    private void setDisplayLF(String name){
+        UIManager.LookAndFeelInfo plaf[] = UIManager.getInstalledLookAndFeels();
+        for (int i = 0, n = plaf.length; i < n; i++) {
+            if(plaf[i].getName().compareTo(name)==0){
+                try{
+                    UIManager.setLookAndFeel(plaf[i].getClassName());
+                    SwingUtilities.updateComponentTreeUI(this);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

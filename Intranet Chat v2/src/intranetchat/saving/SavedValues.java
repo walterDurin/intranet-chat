@@ -52,7 +52,7 @@ public class SavedValues extends Observable {
         background = Color.WHITE;
         foreGround = Color.BLACK;
         font = new Font("Trebuchet MS",Font.PLAIN,12);
-        landf = "Windows";
+        landf = "Metal";
         soundEntrance = false;
         soundMessage = false;
         privateLog = false;
