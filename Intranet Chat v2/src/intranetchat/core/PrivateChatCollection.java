@@ -75,7 +75,6 @@ public class PrivateChatCollection implements Observer{
             String[] mes = list.getMessage().split("~");
             //this will search for the id's presence in the collection
             if(Integer.parseInt(mes[1])== 3){
-                System.out.println("private message received");
                 if(Integer.parseInt(mes[2]) == values.networkID){
                     if(!chatExists(mes[0])){
                         startNewPrivateChat(mes[0],mes[3],list.getMessage());
