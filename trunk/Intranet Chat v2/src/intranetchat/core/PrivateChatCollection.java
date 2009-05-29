@@ -13,7 +13,7 @@ import java.util.Observer;
 
 /**
  * This class is in control of all of the private chat sessions and deals with incoming messages
- * @author Philip
+ * @author Philip White
  */
 public class PrivateChatCollection implements Observer{
     private static PrivateChatCollection instance;
@@ -21,6 +21,12 @@ public class PrivateChatCollection implements Observer{
     private Observable observable;
     private SavedValues values;
 
+    /**
+     * This creates an instance of the class and then returns it to the calling
+     * class
+     * @param obs network observer
+     * @return an instance of the private chat collection
+     */
     public static synchronized PrivateChatCollection getInstance(Observable obs){
         if(instance == null){
             instance = new PrivateChatCollection(obs);
@@ -28,6 +34,10 @@ public class PrivateChatCollection implements Observer{
         return instance;
     }
 
+    /**
+     * a private constructor that is required for the singleton
+     * @param obs the network observer
+     */
     private PrivateChatCollection(Observable obs){
         privateChat = new ArrayList<PrivateChat>();
         values = SavedValues.getInstance();
@@ -36,12 +46,24 @@ public class PrivateChatCollection implements Observer{
 
     }
 
+    /**
+     * This starts a private chat session
+     * @param destinationID the networkID of the communicating program
+     * @param destinationName the name of the communicating program
+     */
     public void startNewPrivateChat(String destinationID, String destinationName){
         PrivateChat chat = new PrivateChat(observable,destinationID,destinationName,this);
         privateChat.add(chat);
 
     }
 
+    /**
+     * This starts a private chat session and then send a message to it this is
+     * for when a user gets sent a message from another user
+     * @param destinationID the networkID of the other program
+     * @param destinationName the network name of the other program
+     * @param message the message that the user sent
+     */
     public void startNewPrivateChat(String destinationID, String destinationName, String message){
         PrivateChat chat = new PrivateChat(observable,destinationID,destinationName,this);
         chat.sortMessage(message);
@@ -49,6 +71,10 @@ public class PrivateChatCollection implements Observer{
 
     }
 
+    /**
+     * this remove a chat instance from the collection once it has finished
+     * @param destinationID the networkID of the other program
+     */
     public void removePrivateChat(String destinationID){
         for(int i = 0 ;i < privateChat.size();i++){
             String id = privateChat.get(i).destinationID;
@@ -59,6 +85,12 @@ public class PrivateChatCollection implements Observer{
         }
     }
 
+    /**
+     * this checks to see if a instance of a chat with a certain program already
+     * exists
+     * @param destinationID NetworkID of other program
+     * @return whether it is present or not
+     */
     private boolean chatExists(String destinationID){
         for(int i = 0 ;i < privateChat.size();i++){
             String id = privateChat.get(i).destinationID;
@@ -69,6 +101,13 @@ public class PrivateChatCollection implements Observer{
         }
         return false;
     }
+
+    /**
+     * this alerts the appropiate methods when an observable class sends an
+     * update to the observers
+     * @param o the observerable class
+     * @param arg object sent by the class
+     */
     public void update(Observable o, Object arg) {
         if(o instanceof NetworkListener){
             NetworkListener list = (NetworkListener) o;

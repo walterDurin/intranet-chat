@@ -21,7 +21,7 @@ public class AboutPanel extends JPanel{
      */
     public AboutPanel() {
         try{
-          img = javax.imageio.ImageIO.read(new java.net.URL(getClass().getResource("logo.png"), "logo.png"));
+          img = javax.imageio.ImageIO.read(new java.net.URL(getClass().getResource("about.png"), "about.png"));
         }catch(Exception e){
 
         }

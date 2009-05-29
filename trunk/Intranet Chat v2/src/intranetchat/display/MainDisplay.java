@@ -56,7 +56,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         list = new DefaultListModel();
         log = new StringBuffer("");
         try {
-            icon = javax.imageio.ImageIO.read(new java.net.URL(getClass().getResource("icon.png"), "icon.png"));
+            icon = javax.imageio.ImageIO.read(new java.net.URL(getClass().getResource("tray_clr.png"), "tray_clr.png"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
