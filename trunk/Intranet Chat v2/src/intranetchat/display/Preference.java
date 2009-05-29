@@ -13,6 +13,7 @@ package intranetchat.display;
 
 import intranetchat.saving.SavedValues;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JColorChooser;
 import javax.swing.UIManager;
@@ -80,7 +81,7 @@ public class Preference extends javax.swing.JDialog {
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Username"));
-        jPanel1.setPreferredSize(new java.awt.Dimension(375, 50));
+        jPanel1.setPreferredSize(new java.awt.Dimension(400, 75));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setText("Username :");
@@ -98,7 +99,7 @@ public class Preference extends javax.swing.JDialog {
         getContentPane().add(jPanel1, gridBagConstraints);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Networking"));
-        jPanel2.setPreferredSize(new java.awt.Dimension(375, 120));
+        jPanel2.setPreferredSize(new java.awt.Dimension(400, 145));
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jLabel2.setText("Comm Port :");
@@ -138,7 +139,7 @@ public class Preference extends javax.swing.JDialog {
         getContentPane().add(jPanel2, gridBagConstraints);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Font"));
-        jPanel3.setPreferredSize(new java.awt.Dimension(375, 150));
+        jPanel3.setPreferredSize(new java.awt.Dimension(400, 175));
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
         jLabel3.setText("Font Name :");
@@ -239,7 +240,7 @@ public class Preference extends javax.swing.JDialog {
         getContentPane().add(jPanel3, gridBagConstraints);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Others"));
-        jPanel4.setPreferredSize(new java.awt.Dimension(375, 100));
+        jPanel4.setPreferredSize(new java.awt.Dimension(400, 125));
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
         jLabel8.setText("Program Look and Feel :");
@@ -280,7 +281,7 @@ public class Preference extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 6);
         getContentPane().add(jButton1, gridBagConstraints);
 
         jButton2.setText("Cancel");
@@ -293,6 +294,7 @@ public class Preference extends javax.swing.JDialog {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         getContentPane().add(jButton2, gridBagConstraints);
 
         pack();
@@ -365,6 +367,15 @@ public class Preference extends javax.swing.JDialog {
         sMessage.setSelected(values.soundMessage);
         fColorPanel.setBackground(values.foreGround);
         bColorPanel.setBackground(values.background);
+        fontCombo.setSelectedItem(values.font.getFontName());
+        sizeCombo.setSelectedItem(values.font.getSize()+"");
+        if(values.font.isPlain()){
+            typeCombo.setSelectedIndex(0);
+        }else if(values.font.isBold()){
+            typeCombo.setSelectedIndex(1);
+        }else if(values.font.isItalic()){
+            typeCombo.setSelectedIndex(2);
+        }
 
     }
 
@@ -379,6 +390,7 @@ public class Preference extends javax.swing.JDialog {
         values.foreGround = fColorPanel.getBackground();
         values.background = bColorPanel.getBackground();
         values.landf = (String)lfCombo.getSelectedItem();
+        values.font = Font.decode(fontCombo.getSelectedItem()+"-"+typeCombo.getSelectedItem()+"-"+sizeCombo.getSelectedItem());
 
     }
 
