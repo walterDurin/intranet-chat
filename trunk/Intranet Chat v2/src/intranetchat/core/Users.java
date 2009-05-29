@@ -7,7 +7,7 @@ package intranetchat.core;
 
 /**
  * a singluar instance of a user
- * @author Philip
+ * @author Philip White
  */
 public class Users {
     private String username;
