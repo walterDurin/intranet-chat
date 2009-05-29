@@ -30,6 +30,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyledDocument;
 
 /**
  * This class is the main display class for the entire program
@@ -45,6 +50,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     PrivateChatCollection privateChats;
     NetworkInterface network;
     Image icon;
+    private StyledDocument cDoc;
     public boolean traySupported;
     private StringBuffer log;
     UserCollection userscol;
@@ -75,6 +81,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         } catch (IOException ex) {}
 
         initComponents();
+        cDoc = incomingData.getStyledDocument();
         this.setLocation(values.x, values.y);
         privateChats = PrivateChatCollection.getInstance(obs);
     }
@@ -91,7 +98,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
 
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        incomingData = new javax.swing.JTextArea();
+        incomingData = new javax.swing.JTextPane();
         outgoingData = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -121,11 +128,6 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         jScrollPane1.setMaximumSize(new java.awt.Dimension(500, 350));
         jScrollPane1.setMinimumSize(new java.awt.Dimension(25, 25));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(500, 350));
-
-        incomingData.setColumns(20);
-        incomingData.setEditable(false);
-        incomingData.setRows(5);
-        incomingData.setWrapStyleWord(true);
         jScrollPane1.setViewportView(incomingData);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -321,7 +323,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     private javax.swing.JMenuItem clearScreen;
     private javax.swing.JMenuItem closeWindows;
     private javax.swing.JMenuItem exit;
-    private javax.swing.JTextArea incomingData;
+    private javax.swing.JTextPane incomingData;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -342,8 +344,12 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
      * @param message incoming message
      */
     public void appendMessage(String message) {
-        incomingData.append(message);
-        incomingData.setCaretPosition(incomingData.getDocument().getLength());
+        //incomingData.append(message);
+        try{
+        MutableAttributeSet chatAttr = new SimpleAttributeSet();
+        cDoc.insertString( cDoc.getLength(), message, chatAttr );
+        incomingData.setCaretPosition(cDoc.getLength());
+        }catch(BadLocationException ex){}
         log.append(message);
     }
 
