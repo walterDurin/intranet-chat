@@ -23,6 +23,8 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Calendar;
 import java.util.Observable;
 import java.util.Observer;
@@ -84,7 +86,11 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         cDoc = incomingData.getStyledDocument();
         this.setLocation(values.x, values.y);
         privateChats = PrivateChatCollection.getInstance(obs);
+
     }
+
+
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -408,7 +414,8 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
              switch(Integer.parseInt(breakup[3])){
                 case 1:
                     try{
-                        network.sendMulticast("2~"+values.networkName+"~2~");
+                        InetAddress thisIp = InetAddress.getLocalHost();
+                        network.sendMulticast("2~"+values.networkName+"~2~"+thisIp.getHostAddress()+"~");
                     }catch(IOException e){}
                     break;
 
@@ -417,7 +424,12 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                         int k = userscol.replaceUsername(breakup[0], breakup[2]);
                         list.set(k, breakup[2]);
                     }else{
-                        Users s = new Users(breakup[2],breakup[0]);
+                        Users s;
+                        if(breakup[4].compareTo("")!= 0){
+                            s = new Users(breakup[2],breakup[0],breakup[4]);
+                        }else{
+                            s = new Users(breakup[2],breakup[0]);
+                        }
                         userscol.addUser(s);
                         list.addElement(breakup[2]);
                         appendMessage(getTime()+": "+breakup[2]+" has joined \n");

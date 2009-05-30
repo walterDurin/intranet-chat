@@ -12,6 +12,7 @@ package intranetchat.core;
 public class Users {
     private String username;
     private String networkID;
+    private String ipAddress;
 
     /**
      * sets the username and networkID
@@ -21,6 +22,12 @@ public class Users {
     public Users(String uname, String netID){
         username = uname;
         networkID = netID;
+    }
+
+    public Users(String uname, String netID, String ip){
+        networkID = netID;
+        username = uname;
+        ipAddress = ip;
     }
 
     /**
@@ -45,5 +52,9 @@ public class Users {
      */
     public String getNetworkID(){
         return networkID;
+    }
+
+    public String getIpAddress(){
+        return ipAddress;
     }
 }
