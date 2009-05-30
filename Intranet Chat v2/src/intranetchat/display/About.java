@@ -12,6 +12,8 @@
 package intranetchat.display;
 
 import intranetchat.saving.SavedValues;
+import java.io.IOException;
+import java.net.InetAddress;
 
 /**
  *
@@ -25,6 +27,10 @@ public class About extends javax.swing.JDialog {
         SavedValues values = SavedValues.getInstance();
         initComponents();
         this.setLocation(values.x+50, values.y+50);
+        try{
+            InetAddress thisIp = InetAddress.getLocalHost();
+            jLabel8.setText("IP Address : "+thisIp.getHostAddress());
+        }catch(IOException ex){}
         jLabel6.setText("JVM Version : "+System.getProperty("java.version"));
         jLabel7.setText("OS : "+System.getProperty("os.name"));
         this.setVisible(true);
@@ -49,6 +55,7 @@ public class About extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -70,7 +77,7 @@ public class About extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
         getContentPane().add(jPanel1, gridBagConstraints);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24));
         jLabel1.setForeground(new java.awt.Color(255, 153, 51));
         jLabel1.setText("IntraNet Chat 2.0.0");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -80,7 +87,7 @@ public class About extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 0);
         getContentPane().add(jLabel1, gridBagConstraints);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14));
         jLabel2.setText("© 2009 Philip White");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -89,7 +96,7 @@ public class About extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(0, 3, 3, 0);
         getContentPane().add(jLabel2, gridBagConstraints);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14));
         jLabel3.setText("philipwhiterm66@gmail.com");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -113,20 +120,20 @@ public class About extends javax.swing.JDialog {
         gridBagConstraints.gridy = 2;
         getContentPane().add(jLabel5, gridBagConstraints);
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14));
         jLabel6.setText("JVM Version :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 3, 3, 0);
         getContentPane().add(jLabel6, gridBagConstraints);
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14));
         jLabel7.setText("OS :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 3, 3, 0);
         getContentPane().add(jLabel7, gridBagConstraints);
@@ -139,9 +146,18 @@ public class About extends javax.swing.JDialog {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         getContentPane().add(jButton1, gridBagConstraints);
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel8.setText("IP Address :");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 3, 0);
+        getContentPane().add(jLabel8, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -159,6 +175,7 @@ public class About extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
