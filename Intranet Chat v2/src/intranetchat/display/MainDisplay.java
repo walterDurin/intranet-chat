@@ -117,7 +117,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         closeWindows = new javax.swing.JMenuItem();
         exit = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        preference = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         About = new javax.swing.JMenuItem();
 
@@ -134,6 +134,8 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         jScrollPane1.setMaximumSize(new java.awt.Dimension(500, 350));
         jScrollPane1.setMinimumSize(new java.awt.Dimension(25, 25));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(500, 350));
+
+        incomingData.setEditable(false);
         jScrollPane1.setViewportView(incomingData);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -237,13 +239,13 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
 
         jMenu2.setText("Settings");
 
-        preference.setText("Preference");
-        preference.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                preferenceMouseReleased(evt);
+        jMenuItem1.setText("Preferences");
+        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItem1MousePressed(evt);
             }
         });
-        jMenu2.add(preference);
+        jMenu2.add(jMenuItem1);
 
         jMenuBar1.add(jMenu2);
 
@@ -278,12 +280,8 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         this.dispose();
     }//GEN-LAST:event_closeWindowsMousePressed
 
-    private void preferenceMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_preferenceMouseReleased
-        Preference preferences = new Preference(this,true);
-    }//GEN-LAST:event_preferenceMouseReleased
-
     private void AboutMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AboutMouseReleased
-        About about = new About(this, true);
+        About about = new About(this, false);
     }//GEN-LAST:event_AboutMouseReleased
 
     private void exitMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseReleased
@@ -324,6 +322,10 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         }
     }//GEN-LAST:event_outgoingDataKeyPressed
 
+    private void jMenuItem1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MousePressed
+        Preference preferences = new Preference(this,false);
+    }//GEN-LAST:event_jMenuItem1MousePressed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem About;
     private javax.swing.JMenuItem clearScreen;
@@ -334,12 +336,12 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField outgoingData;
-    private javax.swing.JMenuItem preference;
     private javax.swing.JButton send;
     private javax.swing.JTextField userName;
     private javax.swing.JList users;
@@ -497,6 +499,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         this.setForegroundColour(values.foreGround);
         this.userName.setText(values.networkName);
         this.setDisplayLF(values.landf);
+        this.pack();
     }
 
     /**
