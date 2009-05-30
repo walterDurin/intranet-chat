@@ -81,7 +81,7 @@ public class Preference extends javax.swing.JDialog {
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Username"));
-        jPanel1.setPreferredSize(new java.awt.Dimension(400, 75));
+        jPanel1.setPreferredSize(new java.awt.Dimension(400, 70));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setText("Username :");
@@ -99,7 +99,7 @@ public class Preference extends javax.swing.JDialog {
         getContentPane().add(jPanel1, gridBagConstraints);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Networking"));
-        jPanel2.setPreferredSize(new java.awt.Dimension(400, 145));
+        jPanel2.setPreferredSize(new java.awt.Dimension(400, 140));
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jLabel2.setText("Comm Port :");
@@ -139,7 +139,7 @@ public class Preference extends javax.swing.JDialog {
         getContentPane().add(jPanel2, gridBagConstraints);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Font"));
-        jPanel3.setPreferredSize(new java.awt.Dimension(400, 175));
+        jPanel3.setPreferredSize(new java.awt.Dimension(400, 170));
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
         jLabel3.setText("Font Name :");
@@ -240,7 +240,7 @@ public class Preference extends javax.swing.JDialog {
         getContentPane().add(jPanel3, gridBagConstraints);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Others"));
-        jPanel4.setPreferredSize(new java.awt.Dimension(400, 125));
+        jPanel4.setPreferredSize(new java.awt.Dimension(400, 120));
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
         jLabel8.setText("Program Look and Feel :");
@@ -376,6 +376,8 @@ public class Preference extends javax.swing.JDialog {
         }else if(values.font.isItalic()){
             typeCombo.setSelectedIndex(2);
         }
+        this.pack();
+
 
     }
 
