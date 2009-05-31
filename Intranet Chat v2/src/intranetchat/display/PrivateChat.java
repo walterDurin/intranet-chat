@@ -25,6 +25,11 @@ import java.util.Observer;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 /**
  *
@@ -38,6 +43,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     private SavedValues values;
     private NetworkInterface network;
     private StringBuffer log;
+    private StyledDocument cDoc;
     PrivateChatCollection parent;
     
     /** Creates new form PrivateChat */
@@ -53,6 +59,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         this.setTitle(destinationName);
         this.setTitle("Private Chat with "+destinationName);
         initComponents();
+        cDoc = displayArea.getStyledDocument();
         this.setVisible(true);
     }
 
@@ -68,7 +75,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        displayArea = new javax.swing.JTextPane();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -91,13 +98,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(400, 350));
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setEditable(false);
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setWrapStyleWord(true);
-        jScrollPane1.setViewportView(jTextArea1);
+        jScrollPane1.setViewportView(displayArea);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = 2;
@@ -190,7 +191,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
         sendMessage();
         String s = getTime()+": "+values.networkName+" : "+jTextField1.getText()+"\n";
-        this.appendMessage(s);
+        this.appendMessage(s, null);
         jTextField1.setText("");
     }//GEN-LAST:event_jButton1MouseReleased
 
@@ -203,7 +204,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_jMenuItem2MouseReleased
 
     private void jMenuItem3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem3MouseReleased
-        jTextArea1.setText("");
+        displayArea.setText("");
         log.append("*** Screen Cleared *** \n");
     }//GEN-LAST:event_jMenuItem3MouseReleased
 
@@ -214,10 +215,14 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             this.sendMessage();
+            String s = getTime()+": "+values.networkName+" : "+jTextField1.getText()+"\n";
+            this.appendMessage(s,null);
+            jTextField1.setText("");
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextPane displayArea;
     private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -229,7 +234,6 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
@@ -249,8 +253,15 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         }
     }
 
-    private void appendMessage(String message){
-        jTextArea1.append(message);
+    private void appendMessage(String message, Color colour){
+                try{
+        MutableAttributeSet chatAttr = new SimpleAttributeSet();
+        if(colour != null){
+            StyleConstants.setForeground( chatAttr, colour );
+        }
+        cDoc.insertString( cDoc.getLength(), message, chatAttr );
+        displayArea.setCaretPosition(cDoc.getLength());
+        }catch(BadLocationException ex){}
         log.append(message);
     }
 
@@ -280,7 +291,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
                         destinationName = mes[3];
                         this.setTitle("Private Chat with "+destinationName);
                     }
-                    this.appendMessage(getTime()+": "+destinationName+" : "+mes[4]+"\n");
+                    this.appendMessage(getTime()+": "+destinationName+" : "+mes[4]+"\n",null);
                 }
             }
         }
@@ -303,7 +314,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
      * @param f the font selected
      */
     private void setFontType(Font f){
-        jTextArea1.setFont(f);
+        displayArea.setFont(f);
         jTextField1.setFont(f);
     }
 
@@ -313,7 +324,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
      */
     private void setBackgroundColour(Color c){
         jPanel1.setBackground(c);
-        jTextArea1.setBackground(c);
+        displayArea.setBackground(c);
         jTextField1.setBackground(c);
     }
 
@@ -322,7 +333,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
      * @param c colour chosen by the user
      */
     private void setForegroundColour(Color c){
-        jTextArea1.setForeground(c);
+        displayArea.setForeground(c);
         jTextField1.setForeground(c);
     }
 
