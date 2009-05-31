@@ -36,6 +36,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 /**
@@ -351,10 +352,12 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
      * Appends a mesage to the message window in the gui
      * @param message incoming message
      */
-    public void appendMessage(String message) {
-        //incomingData.append(message);
+    public void appendMessage(String message, Color colour) {
         try{
         MutableAttributeSet chatAttr = new SimpleAttributeSet();
+        if(colour != null){
+            StyleConstants.setForeground( chatAttr, colour );
+        }
         cDoc.insertString( cDoc.getLength(), message, chatAttr );
         incomingData.setCaretPosition(cDoc.getLength());
         }catch(BadLocationException ex){}
@@ -411,7 +414,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
             i = Integer.parseInt(breakup[0]);
             s = getTime()+": "+breakup[2]+" : "+breakup[3]+"\n";
 
-            this.appendMessage(s);
+            this.appendMessage(s,null);
         }else if(i == 2){
              switch(Integer.parseInt(breakup[3])){
                 case 1:
@@ -434,7 +437,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                         }
                         userscol.addUser(s);
                         list.addElement(breakup[2]);
-                        appendMessage(getTime()+": "+breakup[2]+" has joined \n");
+                        appendMessage(getTime()+": "+breakup[2]+" has joined \n",Color.RED);
                     }
                     break;
 
@@ -443,7 +446,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                     j = userscol.removeUser(breakup[0]);
                     if(j != -1){
                         list.remove(j);
-                        appendMessage(getTime()+": "+breakup[2]+" has left \n");
+                        appendMessage(getTime()+": "+breakup[2]+" has left \n",Color.RED);
                     }
                     break;
 
