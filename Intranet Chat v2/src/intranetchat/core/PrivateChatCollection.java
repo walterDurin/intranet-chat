@@ -95,7 +95,6 @@ public class PrivateChatCollection implements Observer{
         for(int i = 0 ;i < privateChat.size();i++){
             String id = privateChat.get(i).destinationID;
             if(id.compareTo(destinationID)==0){
-                privateChat.remove(i);
                 return true;
             }
         }

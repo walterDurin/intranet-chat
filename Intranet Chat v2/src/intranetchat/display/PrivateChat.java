@@ -98,6 +98,8 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(400, 350));
+
+        displayArea.setEditable(false);
         jScrollPane1.setViewportView(displayArea);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
