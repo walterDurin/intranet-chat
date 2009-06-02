@@ -127,6 +127,16 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         setTitle("IntraNet Chat");
         setIconImage(icon);
         setName("IntraNet Chat"); // NOI18N
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentMoved(java.awt.event.ComponentEvent evt) {
+                formComponentMoved(evt);
+            }
+        });
+        addWindowStateListener(new java.awt.event.WindowStateListener() {
+            public void windowStateChanged(java.awt.event.WindowEvent evt) {
+                formWindowStateChanged(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
@@ -327,6 +337,14 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     private void jMenuItem1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MousePressed
         Preference preferences = new Preference(this,false);
     }//GEN-LAST:event_jMenuItem1MousePressed
+
+    private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
+
+    }//GEN-LAST:event_formWindowStateChanged
+
+    private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
+
+    }//GEN-LAST:event_formComponentMoved
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem About;
@@ -562,6 +580,8 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
 
     public void saving(){
         values.networkName = userName.getText();
+        values.x = this.getX();
+        values.y = this.getY();
         values.exportValues(SavedValues.DEFAULT_PATH);
         try{
         network.sendMulticast("2~"+values.networkName+"~3~");

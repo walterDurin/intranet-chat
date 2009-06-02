@@ -56,8 +56,8 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         destinationName = name;
         parent = p;
         log = new StringBuffer("");
-        this.setTitle(destinationName);
         this.setTitle("Private Chat with "+destinationName);
+        this.setLocation(values.x+20,values.y+20);
         initComponents();
         cDoc = displayArea.getStyledDocument();
         this.setVisible(true);
