@@ -438,12 +438,8 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                             s = new Users(breakup[2],breakup[0]);
                         }
                         userscol.addUser(s);
-                        if(Integer.parseInt(breakup[0]) == values.networkID){
-                            String[] sa = {breakup[2],breakup[0]};
-                            list.addElement(sa);
-                        }else{
-
-                        }
+                        String[] sa = {breakup[2],breakup[0]};
+                        list.addElement(sa);
                         appendMessage(getTime()+": "+breakup[2]+" has joined \n",Color.RED);
                     }
                     break;
