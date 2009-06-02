@@ -33,6 +33,8 @@ public class userListRenderer extends JLabel implements ListCellRenderer{
         
         if(in[1].compareTo(values.networkID+"")==0){
             setFont( list.getFont().deriveFont( Font.BOLD ) );
+        }else{
+            setFont( list.getFont());
         }
 
 
