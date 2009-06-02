@@ -84,6 +84,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         } catch (IOException ex) {}
 
         initComponents();
+        users.setCellRenderer(new userListRenderer());
         cDoc = incomingData.getStyledDocument();
         this.setLocation(values.x, values.y);
         privateChats = PrivateChatCollection.getInstance(obs);
@@ -427,7 +428,8 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                 case 2:
                     if(userscol.userExists(breakup[0])){
                         int k = userscol.replaceUsername(breakup[0], breakup[2]);
-                        list.set(k, breakup[2]);
+                        String[] s = {breakup[2],breakup[0]};
+                        list.set(k, s);
                     }else{
                         Users s;
                         if(breakup[4].compareTo("")!= 0){
@@ -436,7 +438,12 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                             s = new Users(breakup[2],breakup[0]);
                         }
                         userscol.addUser(s);
-                        list.addElement(breakup[2]);
+                        if(Integer.parseInt(breakup[0]) == values.networkID){
+                            String[] sa = {breakup[2],breakup[0]};
+                            list.addElement(sa);
+                        }else{
+
+                        }
                         appendMessage(getTime()+": "+breakup[2]+" has joined \n",Color.RED);
                     }
                     break;
