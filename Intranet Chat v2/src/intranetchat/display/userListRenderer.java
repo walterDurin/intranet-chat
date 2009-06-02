@@ -6,6 +6,7 @@
 package intranetchat.display;
 
 import intranetchat.saving.SavedValues;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import javax.swing.JLabel;
@@ -25,10 +26,8 @@ public class userListRenderer extends JLabel implements ListCellRenderer{
 
         setText(in[0]);
         if (isSelected) {
-            setBackground(list.getSelectionBackground());
-            setForeground(list.getSelectionForeground());
+            setForeground(Color.BLUE);
         } else {
-            setBackground(list.getBackground());
             setForeground(list.getForeground());
         }
         

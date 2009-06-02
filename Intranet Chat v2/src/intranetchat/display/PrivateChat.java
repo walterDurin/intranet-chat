@@ -134,7 +134,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         jPanel1.add(jButton1, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 4, 4);
         getContentPane().add(jPanel1, gridBagConstraints);
 
         jMenu1.setText("File");
