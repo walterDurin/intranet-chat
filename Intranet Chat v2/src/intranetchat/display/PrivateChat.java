@@ -241,7 +241,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void sendMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMousePressed
-        FileUpload uploader = new FileUpload(this, false, destinationID);
+
     }//GEN-LAST:event_sendMousePressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
