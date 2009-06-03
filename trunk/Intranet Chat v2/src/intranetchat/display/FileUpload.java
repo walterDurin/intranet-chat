@@ -16,15 +16,12 @@ import intranetchat.core.Users;
 import intranetchat.saving.SavedValues;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -183,14 +180,17 @@ public class FileUpload extends javax.swing.JDialog {
     private void startNetworkTransfer(File file,String networkAddress){
         try {
             Socket fileTransfer = new Socket(networkAddress, 4000);
-            byte[] trans = new byte[(int)file.length()];
+            byte[] transfer = new byte[(int)file.length()];
             InputStream is = fileTransfer.getInputStream();
             FileOutputStream fs = new FileOutputStream(file);
             BufferedOutputStream bs = new BufferedOutputStream(fs);
             int bytesRead = 0;
+            int offset = 0;
             while(bytesRead < (int)file.length()){
-                
+                bytesRead = is.read(transfer, bytesRead, transfer.length - offset);
+                offset += bytesRead;
             }
+            bs.write(transfer, 0, transfer.length);
 
         } catch (UnknownHostException ex) {
 
