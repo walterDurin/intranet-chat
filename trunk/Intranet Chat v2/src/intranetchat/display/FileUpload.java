@@ -12,6 +12,10 @@
 package intranetchat.display;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import javax.swing.JFileChooser;
 
 /**
@@ -19,18 +23,25 @@ import javax.swing.JFileChooser;
  * @author Philip
  */
 public class FileUpload extends javax.swing.JDialog {
-
+    byte[] trans;
 
     /** Creates new form FileUpload */
     public FileUpload(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        //Starts the JFileChooser so a file can be selected
         JFileChooser chooser  = new JFileChooser();
         int returnVal = chooser.showOpenDialog(null);
         if(!(returnVal == JFileChooser.APPROVE_OPTION)) {
             this.dispose();
         }
+
         File f = chooser.getSelectedFile();
-        
+        try{
+            trans = getFileBytes(f);
+        }catch(IOException ex){
+
+        }
+
         initComponents();
 
     }
@@ -62,4 +73,38 @@ public class FileUpload extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * This file will take the file and convert it into a byte[]
+     * @param f the file that is to be converted into a byte[]
+     * @return the byte[] of the file
+     * @throws java.io.FileNotFoundException thrown if the file cannot be found
+     * @throws java.io.IOException thrown if there is an issue with reading the file
+     */
+    private byte[] getFileBytes(File f) throws IOException{
+        InputStream in = new FileInputStream(f);
+        //This finds out how long the file is and whether it is small enough to be transfered
+        long length = f.length();
+        if(length > Integer.MAX_VALUE){
+            System.out.println("File to large");
+            return null;
+        }
+        //creates a byte[] of the length of the file
+        byte[] bytes = new byte[(int)length];
+
+        //this section reads the file in and stores it in the byte[]
+        int offset = 0;
+        int numRead = 0;
+        while(numRead >= 0){
+            numRead = in.read(bytes,offset,bytes.length - offset);
+            offset += numRead;
+        }
+
+        //if the file is incomplete then this statement will find it and thrown an exception
+        if(offset < bytes.length){
+            throw new IOException("File Not Completely Read"+ f.getName());
+        }
+        in.close();
+
+        return bytes;
+    }
 }
