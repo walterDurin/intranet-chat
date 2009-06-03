@@ -11,6 +11,7 @@
 
 package intranetchat.display;
 
+import intranetchat.core.ChatEncryption;
 import intranetchat.core.NetworkInterface;
 import intranetchat.core.NetworkListener;
 import intranetchat.core.PrivateChatCollection;
@@ -47,6 +48,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     private StyledDocument cDoc;
     PrivateChatCollection parent;
     Sounds sound;
+    ChatEncryption encrypt;
 
     /** Creates new form PrivateChat */
     public PrivateChat(Observable obs, String id, String name, PrivateChatCollection p) {
@@ -63,6 +65,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         initComponents();
         cDoc = displayArea.getStyledDocument();
         sound = Sounds.getInstance();
+        encrypt = ChatEncryption.getInstance();
 
         this.setVisible(true);
 
@@ -274,6 +277,9 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
 
     private void sendMessage(){
         String mes = jTextField1.getText();
+        if(values.encrypted){
+            mes = encrypt.encryptChat(mes);
+        }
         StringBuffer buf = new StringBuffer("3~");
         buf.append(destinationID+"~");
         buf.append(values.networkName+"~");
@@ -298,7 +304,11 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
                         destinationName = mes[3];
                         this.setTitle("Private Chat with "+destinationName);
                     }
-                    this.appendMessage(getTime()+": "+destinationName+" : "+mes[4]+"\n",null);
+                    if(mes[4].charAt(0)== '^'){
+                        this.appendMessage(getTime()+": "+destinationName+" : "+encrypt.decryptChat(mes[4])+"\n",null);
+                    }else{
+                        this.appendMessage(getTime()+": "+destinationName+" : "+mes[4]+"\n",null);
+                    }
                     sound.newMessageIncoming();
                 }
             }
