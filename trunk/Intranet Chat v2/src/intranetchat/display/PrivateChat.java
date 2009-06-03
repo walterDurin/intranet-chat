@@ -88,6 +88,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        send = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -146,6 +147,14 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         getContentPane().add(jPanel1, gridBagConstraints);
 
         jMenu1.setText("File");
+
+        send.setText("Send File");
+        send.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                sendMousePressed(evt);
+            }
+        });
+        jMenu1.add(send);
 
         jMenuItem3.setText("Clear Screen");
         jMenuItem3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -231,6 +240,10 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
+    private void sendMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMousePressed
+        FileUpload uploader = new FileUpload(this, false);
+    }//GEN-LAST:event_sendMousePressed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextPane displayArea;
     private javax.swing.JButton jButton1;
@@ -245,6 +258,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JMenuItem send;
     // End of variables declaration//GEN-END:variables
 
 
