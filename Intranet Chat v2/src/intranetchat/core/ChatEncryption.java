@@ -11,9 +11,11 @@ package intranetchat.core;
  */
 public class ChatEncryption {
     private static volatile ChatEncryption instance;
+    private int pos;
+    private String passKey = "d4f82a";
 
     private ChatEncryption(){
-
+        pos = 0;
     }
 
     public static synchronized ChatEncryption getInstance(){
@@ -23,11 +25,35 @@ public class ChatEncryption {
         return instance;
     }
 
-    public String encryptChat(String message){
-        return message;
+    public String encryptChat(String clear){
+        pos = 0;
+        String cipher = "^:";
+        for(int i = 0;i < clear.length();i++){
+           int c = (clear.charAt(i));
+           if(pos == passKey.length()){
+               pos = 0;
+           }
+           c += passKey.charAt(pos);
+           pos++;
+           cipher += c+":";
+        }
+        return cipher;
     }
 
-    public String decryptChat(String message){
-        return message;
+    public String decryptChat(String cipher){
+        pos = 0;
+        String clear = "";
+        String[] ci= cipher.split(":");
+        for(int i = 1;i < ci.length;i++){
+           int c = Integer.parseInt(ci[i]);
+           if(pos == passKey.length()){
+               pos = 0;
+           }
+           c -= passKey.charAt(pos);
+           clear += (char) c;
+           pos++;
+        }
+
+        return clear;
     }
 }
