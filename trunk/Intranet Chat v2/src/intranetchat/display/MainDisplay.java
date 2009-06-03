@@ -11,6 +11,7 @@
 
 package intranetchat.display;
 
+import intranetchat.core.ChatEncryption;
 import intranetchat.core.NetworkInterface;
 import intranetchat.core.NetworkListener;
 import intranetchat.core.PrivateChatCollection;
