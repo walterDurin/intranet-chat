@@ -14,6 +14,7 @@ package intranetchat.display;
 import intranetchat.core.NetworkInterface;
 import intranetchat.core.NetworkListener;
 import intranetchat.core.PrivateChatCollection;
+import intranetchat.core.Sounds;
 import intranetchat.core.UserCollection;
 import intranetchat.core.Users;
 import intranetchat.saving.SavedValues;
@@ -55,6 +56,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     public boolean traySupported;
     private StringBuffer log;
     UserCollection userscol;
+    Sounds sounds;
 
     /** Creates new form MainDisplay */
     public MainDisplay(Observable obs, NetworkInterface n) {
@@ -86,7 +88,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         cDoc = incomingData.getStyledDocument();
         this.setLocation(values.x, values.y);
         privateChats = PrivateChatCollection.getInstance(obs);
-
+        sounds = Sounds.getInstance();
     }
 
 
@@ -430,7 +432,9 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
             String s;
             i = Integer.parseInt(breakup[0]);
             s = getTime()+": "+breakup[2]+" : "+breakup[3]+"\n";
-
+            if(breakup[0].compareTo(values.networkID+"")!=0){
+                sounds.newMessageIncoming();
+            }
             this.appendMessage(s,null);
         }else if(i == 2){
              switch(Integer.parseInt(breakup[3])){
@@ -457,6 +461,9 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                         String[] sa = {breakup[2],breakup[0]};
                         list.addElement(sa);
                         appendMessage(getTime()+": "+breakup[2]+" has joined \n",Color.RED);
+                        if(breakup[0].compareTo(values.networkID+"")!=0){
+                            sounds.newUserEntered();
+                        }
                     }
                     break;
 
@@ -466,6 +473,9 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                     if(j != -1){
                         list.remove(j);
                         appendMessage(getTime()+": "+breakup[2]+" has left \n",Color.RED);
+                        if(breakup[0].compareTo(values.networkID+"")!=0){
+                            sounds.UserLeft();
+                        }
                     }
                     break;
 

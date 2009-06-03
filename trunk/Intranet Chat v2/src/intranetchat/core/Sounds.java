@@ -35,7 +35,7 @@ public class Sounds {
             url = new URL(getClass().getResource("imsend.wav"),"imsend.wav");
             messClip = Applet.newAudioClip(url);
         } catch (IOException e){
-
+            System.out.println("Sound Error");
         }
     }
 

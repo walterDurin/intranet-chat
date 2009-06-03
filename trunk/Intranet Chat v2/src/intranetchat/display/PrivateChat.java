@@ -14,6 +14,7 @@ package intranetchat.display;
 import intranetchat.core.NetworkInterface;
 import intranetchat.core.NetworkListener;
 import intranetchat.core.PrivateChatCollection;
+import intranetchat.core.Sounds;
 import intranetchat.saving.SavedValues;
 import java.awt.Color;
 import java.awt.Font;
@@ -45,7 +46,8 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     private StringBuffer log;
     private StyledDocument cDoc;
     PrivateChatCollection parent;
-    
+    Sounds sound;
+
     /** Creates new form PrivateChat */
     public PrivateChat(Observable obs, String id, String name, PrivateChatCollection p) {
         values = SavedValues.getInstance();
@@ -60,7 +62,10 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         this.setLocation(values.x+20,values.y+20);
         initComponents();
         cDoc = displayArea.getStyledDocument();
+        sound = Sounds.getInstance();
+
         this.setVisible(true);
+
     }
 
     /** This method is called from within the constructor to
@@ -294,6 +299,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
                         this.setTitle("Private Chat with "+destinationName);
                     }
                     this.appendMessage(getTime()+": "+destinationName+" : "+mes[4]+"\n",null);
+                    sound.newMessageIncoming();
                 }
             }
         }
