@@ -263,6 +263,13 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         }
     }
 
+    /**
+     * this will add a string to the main screen of the private chat and allows
+     * a user to change the colour of the message or send null to use the standard
+     * colour
+     * @param message the message to be sent to the screen
+     * @param colour the colour of the message that the message is or null
+     */
     private void appendMessage(String message, Color colour){
                 try{
         MutableAttributeSet chatAttr = new SimpleAttributeSet();
@@ -275,6 +282,10 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         log.append(message);
     }
 
+    /**
+     * Will send a private message across the multicast system to the person on
+     * the other end
+     */
     private void sendMessage(){
         String mes = jTextField1.getText();
         if(values.encrypted){
@@ -297,18 +308,24 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
      */
     public void sortMessage(String input){
         String[] mes = input.split("~");
+        //checks to see of the message is a private chat message
         if(Integer.parseInt(mes[1]) == 3){
+            //checks to see if the message is meant to be read by this certain program
             if(Integer.parseInt(mes[2]) == values.networkID){
+                //check to see if the message is meant for this private chat window
                 if(mes[0].compareTo(destinationID)==0){
+                    //if the name of the user has changed then it will adjust the title of the window
                     if(mes[4].compareTo(destinationName)!=0){
                         destinationName = mes[3];
                         this.setTitle("Private Chat with "+destinationName);
                     }
+                    //if the message is encrypted it will be sent to the decrypter
                     if(mes[4].charAt(0)== '^'){
                         this.appendMessage(getTime()+": "+destinationName+" : "+encrypt.decryptChat(mes[4])+"\n",null);
                     }else{
                         this.appendMessage(getTime()+": "+destinationName+" : "+mes[4]+"\n",null);
                     }
+                    //play the sound to indicate a new message has arrived
                     sound.newMessageIncoming();
                 }
             }
@@ -355,7 +372,12 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         jTextField1.setForeground(c);
     }
 
-        private String getTime(){
+    /**
+     * this will return a string which will display the current time in a 
+     * [hour:minute:second] format for the main display
+     * @return the time for the main display
+     */
+    private String getTime(){
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR);
         String minute = calendar.get(Calendar.MINUTE)+"";
@@ -376,6 +398,10 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         return "["+h+":"+minute+":"+second+"]";
     }
 
+    /**
+     * this method will return a timestamp for the log file saving
+     * @return a timestamp with the current date and time
+     */
     private String getTimeStamp(){
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
