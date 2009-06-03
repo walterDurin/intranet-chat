@@ -11,12 +11,22 @@
 
 package intranetchat.display;
 
+import intranetchat.core.UserCollection;
+import intranetchat.core.Users;
+import intranetchat.saving.SavedValues;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,7 +36,7 @@ public class FileUpload extends javax.swing.JDialog {
     byte[] trans;
 
     /** Creates new form FileUpload */
-    public FileUpload(java.awt.Frame parent, boolean modal) {
+    public FileUpload(java.awt.Frame parent, boolean modal, String userID) {
         super(parent, modal);
         //Starts the JFileChooser so a file can be selected
         JFileChooser chooser  = new JFileChooser();
@@ -36,14 +46,21 @@ public class FileUpload extends javax.swing.JDialog {
         }
 
         File f = chooser.getSelectedFile();
-        try{
-            trans = getFileBytes(f);
-        }catch(IOException ex){
+        UserCollection users = UserCollection.getInstance();
+        SavedValues values = SavedValues.getInstance();
 
+        Users u = users.getUser(userID);
+        //Determines whether or not the destination program is the of the valid version
+        if(u.getIpAddress().length() > 15){
+            JOptionPane.showMessageDialog(this,"Destination version not compatible", "ERROR",JOptionPane.WARNING_MESSAGE);
         }
-
         initComponents();
-
+        details.setText("Waiting for other user to accept...");
+        localID.setText(values.networkName);
+        destID.setText(u.getUsername());
+        filename.setText(f.getName());
+        this.setVisible(true);
+        this.startNetworkTransfer(f,u.getIpAddress());
     }
 
     /** This method is called from within the constructor to
@@ -57,11 +74,92 @@ public class FileUpload extends javax.swing.JDialog {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        localID = new javax.swing.JLabel();
+        destID = new javax.swing.JLabel();
+        filename = new javax.swing.JLabel();
+        progress = new javax.swing.JProgressBar();
+        jButton1 = new javax.swing.JButton();
+        details = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setText("Source Location :");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 3, 3);
+        jPanel1.add(jLabel1, gridBagConstraints);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setText("Destination Location :");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 2);
+        jPanel1.add(jLabel2, gridBagConstraints);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setText("Filename :");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 3);
+        jPanel1.add(jLabel3, gridBagConstraints);
+
+        localID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        localID.setText("jLabel4");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel1.add(localID, gridBagConstraints);
+
+        destID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        destID.setText("jLabel5");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel1.add(destID, gridBagConstraints);
+
+        filename.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        filename.setText("jLabel6");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel1.add(filename, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 0);
+        jPanel1.add(progress, gridBagConstraints);
+
+        jButton1.setText("Cancel");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 0);
+        jPanel1.add(jButton1, gridBagConstraints);
+
+        details.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        details.setText("jLabel4");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.insets = new java.awt.Insets(9, 0, 0, 0);
+        jPanel1.add(details, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 4, 4, 4);
         getContentPane().add(jPanel1, gridBagConstraints);
@@ -70,41 +168,34 @@ public class FileUpload extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel destID;
+    private javax.swing.JLabel details;
+    private javax.swing.JLabel filename;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel localID;
+    private javax.swing.JProgressBar progress;
     // End of variables declaration//GEN-END:variables
 
-    /**
-     * This file will take the file and convert it into a byte[]
-     * @param f the file that is to be converted into a byte[]
-     * @return the byte[] of the file
-     * @throws java.io.FileNotFoundException thrown if the file cannot be found
-     * @throws java.io.IOException thrown if there is an issue with reading the file
-     */
-    private byte[] getFileBytes(File f) throws IOException{
-        InputStream in = new FileInputStream(f);
-        //This finds out how long the file is and whether it is small enough to be transfered
-        long length = f.length();
-        if(length > Integer.MAX_VALUE){
-            System.out.println("File to large");
-            return null;
-        }
-        //creates a byte[] of the length of the file
-        byte[] bytes = new byte[(int)length];
+    private void startNetworkTransfer(File file,String networkAddress){
+        try {
+            Socket fileTransfer = new Socket(networkAddress, 4000);
+            byte[] trans = new byte[(int)file.length()];
+            InputStream is = fileTransfer.getInputStream();
+            FileOutputStream fs = new FileOutputStream(file);
+            BufferedOutputStream bs = new BufferedOutputStream(fs);
+            int bytesRead = 0;
+            while(bytesRead < (int)file.length()){
+                
+            }
 
-        //this section reads the file in and stores it in the byte[]
-        int offset = 0;
-        int numRead = 0;
-        while(numRead >= 0){
-            numRead = in.read(bytes,offset,bytes.length - offset);
-            offset += numRead;
-        }
+        } catch (UnknownHostException ex) {
 
-        //if the file is incomplete then this statement will find it and thrown an exception
-        if(offset < bytes.length){
-            throw new IOException("File Not Completely Read"+ f.getName());
-        }
-        in.close();
+        } catch (IOException ex) {
 
-        return bytes;
+        }
     }
 }

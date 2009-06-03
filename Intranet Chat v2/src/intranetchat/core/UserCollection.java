@@ -100,4 +100,13 @@ public class UserCollection{
     public Users getUser(int i){
         return userCollection.get(i);
     }
+
+    public Users getUser(String userID){
+        for(int i = 0 ; i < userCollection.size(); i++ ){
+            if(userCollection.get(i).getNetworkID().compareTo(userID) == 0){
+                return userCollection.get(i);
+            }
+        }
+        return null;
+    }
 }
