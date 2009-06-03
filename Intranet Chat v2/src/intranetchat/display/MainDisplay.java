@@ -61,7 +61,6 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
 
     /** Creates new form MainDisplay */
     public MainDisplay(Observable obs, NetworkInterface n) {
-        traySupported = true;
         userscol = UserCollection.getInstance();
         list = new DefaultListModel();
         log = new StringBuffer("");
