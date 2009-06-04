@@ -13,6 +13,7 @@ package intranetchat.display;
 
 import intranetchat.core.FileTransferListener;
 import intranetchat.core.FileTransferSystem;
+import intranetchat.saving.SavedValues;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -21,11 +22,16 @@ import java.util.Observer;
  * @author Philip
  */
 public class FileTransferDisplay extends javax.swing.JDialog implements Observer {
-
+    SavedValues values;
     /** Creates new form FileTransferDisplay */
-    public FileTransferDisplay(java.awt.Frame parent, boolean modal,Observable o) {
+    public FileTransferDisplay(java.awt.Frame parent, boolean modal,Observable o,String[] data) {
         super(parent, modal);
         initComponents();
+        values = SavedValues.getInstance();
+        jLabel5.setText(data[0]);
+        jLabel6.setText(data[1]);
+        jLabel7.setText(data[2]);
+        jProgressBar1.setMaximum(Integer.parseInt(data[3]));
     }
 
     /** This method is called from within the constructor to
@@ -42,7 +48,6 @@ public class FileTransferDisplay extends javax.swing.JDialog implements Observer
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
         jButton1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -78,15 +83,6 @@ public class FileTransferDisplay extends javax.swing.JDialog implements Observer
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 3, 3);
         jPanel1.add(jLabel3, gridBagConstraints);
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setText("progress");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 3, 0);
-        jPanel1.add(jLabel4, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -144,6 +140,9 @@ public class FileTransferDisplay extends javax.swing.JDialog implements Observer
         if(o instanceof FileTransferListener){
             FileTransferListener ftl = (FileTransferListener)o;
             jProgressBar1.setValue(ftl.getPosition());
+        }else if(o instanceof FileTransferSystem){
+            FileTransferSystem fts = (FileTransferSystem)o;
+            
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -151,7 +150,6 @@ public class FileTransferDisplay extends javax.swing.JDialog implements Observer
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
