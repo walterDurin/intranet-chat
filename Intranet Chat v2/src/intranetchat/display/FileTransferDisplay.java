@@ -11,6 +11,8 @@
 
 package intranetchat.display;
 
+import intranetchat.core.FileTransferListener;
+import intranetchat.core.FileTransferSystem;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -139,6 +141,10 @@ public class FileTransferDisplay extends javax.swing.JDialog implements Observer
     }//GEN-LAST:event_jButton1MousePressed
 
     public void update(Observable o, Object arg) {
+        if(o instanceof FileTransferListener){
+            FileTransferListener ftl = (FileTransferListener)o;
+            jProgressBar1.setValue(ftl.getPosition());
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
