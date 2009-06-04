@@ -11,14 +11,17 @@
 
 package intranetchat.display;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * This class will only interface wiht the FileTransferSystem class
  * @author Philip
  */
-public class FileTransferDisplay extends javax.swing.JDialog {
+public class FileTransferDisplay extends javax.swing.JDialog implements Observer {
 
     /** Creates new form FileTransferDisplay */
-    public FileTransferDisplay(java.awt.Frame parent, boolean modal) {
+    public FileTransferDisplay(java.awt.Frame parent, boolean modal,Observable o) {
         super(parent, modal);
         initComponents();
     }
@@ -47,6 +50,9 @@ public class FileTransferDisplay extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public void update(Observable o, Object arg) {
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 

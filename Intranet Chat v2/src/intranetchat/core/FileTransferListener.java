@@ -6,10 +6,12 @@
 package intranetchat.core;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Observable;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,6 +22,7 @@ public class FileTransferListener extends Observable implements Runnable{
     ServerSocket fileSocket;
     Socket client;
     DataInputStream in;
+    DataOutputStream out;
     private byte[] inBytes;
     private String name;
     private int pos;
@@ -43,36 +46,39 @@ public class FileTransferListener extends Observable implements Runnable{
             try{
                 client = fileSocket.accept();
                 in = new DataInputStream(client.getInputStream());
-                int length = in.readInt();
-                inBytes = new byte[length];
-                name = in.readUTF();
-                total = length;
-                int offset = 0;
-                int numRead = 0;
-                while (offset < inBytes.length && (numRead=in.read(inBytes, offset, inBytes.length-offset)) >= 0) {
-                    offset += numRead;
-                    pos = offset;
-                    this.setChanged();
-                    this.notifyObservers();
+                out = new DataOutputStream(client.getOutputStream());
+                byte[] data = new byte[1024];
+                in.read(data);
+                String s = new String(data);
+                String[] conf = s.split("~#");
+
+                int response = JOptionPane.showConfirmDialog(null,conf[0]+" wants to send a file", "File incoming",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(response == JOptionPane.NO_OPTION){
+                    out.writeBytes("NO");
+                    out.flush();
+                    out.close();
+                    in.close();
+                }else if(response == JOptionPane.YES_OPTION){
+                    out.writeBytes("YES");
+                    
+
+                    //once accepted then the file is sent
+                    int offset = 0;
+                    int numRead = 0;
+                    while (offset < inBytes.length && (numRead=in.read(inBytes, offset, inBytes.length-offset)) >= 0) {
+                        offset += numRead;
+                        pos = offset;
+                        this.setChanged();
+                        this.notifyObservers();
+                    }
+                    in.close();
+                    out.close();
                 }
-                in.close();
             }catch(IOException ex){}
         }
     }
 
     public int getPosition(){
         return pos;
-    }
-
-    public int getLength(){
-        return total;
-    }
-
-    public byte[] getFileBytes(){
-        return inBytes;
-    }
-
-    public String getFileName(){
-        return name;
     }
 }
