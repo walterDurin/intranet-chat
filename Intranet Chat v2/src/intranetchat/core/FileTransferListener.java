@@ -5,6 +5,7 @@
 
 package intranetchat.core;
 
+import intranetchat.display.FileTransferDisplay;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -60,7 +61,8 @@ public class FileTransferListener extends Observable implements Runnable{
                     in.close();
                 }else if(response == JOptionPane.YES_OPTION){
                     out.writeBytes("YES");
-                    
+                    //Start the Graphical User Interface and pass the data
+                    FileTransferDisplay display = new FileTransferDisplay(null, false, this);
 
                     //once accepted then the file is sent
                     int offset = 0;
