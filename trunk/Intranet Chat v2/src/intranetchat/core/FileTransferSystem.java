@@ -11,4 +11,16 @@ package intranetchat.core;
  */
 public class FileTransferSystem {
 
+
+    public FileTransferSystem(){
+
+    }
+
+    public void incomingFile(){
+
+    }
+
+    public void outgoingFile(){
+
+    }
 }
