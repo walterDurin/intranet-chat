@@ -6,6 +6,7 @@
 package intranetchat.core;
 
 import intranetchat.display.FileTransferDisplay;
+import intranetchat.saving.SavedValues;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import javax.swing.JOptionPane;
  */
 public class FileTransferListener extends Observable implements Runnable{
     private static volatile FileTransferListener instance;
+    SavedValues values;
     ServerSocket fileSocket;
     Socket client;
     DataInputStream in;
@@ -32,6 +34,7 @@ public class FileTransferListener extends Observable implements Runnable{
     private FileTransferListener (){
         try{
         fileSocket = new ServerSocket(4000,1);
+        values = SavedValues.getInstance();
         }catch(IOException ex){}
     }
 
@@ -62,7 +65,8 @@ public class FileTransferListener extends Observable implements Runnable{
                 }else if(response == JOptionPane.YES_OPTION){
                     out.writeBytes("YES");
                     //Start the Graphical User Interface and pass the data
-                    FileTransferDisplay display = new FileTransferDisplay(null, false, this);
+                    String[] info = {conf[0],values.networkName,conf[1],conf[2]};
+                    FileTransferDisplay display = new FileTransferDisplay(null, false, this,info);
 
                     //once accepted then the file is sent
                     int offset = 0;

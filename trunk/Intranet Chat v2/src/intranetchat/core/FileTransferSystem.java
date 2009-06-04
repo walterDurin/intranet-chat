@@ -5,11 +5,13 @@
 
 package intranetchat.core;
 
+import java.util.Observable;
+
 /**
  *
  * @author Philip
  */
-public class FileTransferSystem {
+public class FileTransferSystem extends Observable{
 
 
     public FileTransferSystem(){
