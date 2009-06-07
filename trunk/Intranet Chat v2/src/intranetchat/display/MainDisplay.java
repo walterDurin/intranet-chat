@@ -492,9 +492,11 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                         if(resp == JOptionPane.YES_OPTION){
                             //Agreed to the download start the file transfer
                             System.out.println("YES");
+                            //send confermation back to the server
                         }else{
                             //no download to take place
                             System.out.println("NO");
+                            //send denial back to server
                         }
                     }
                     break;
