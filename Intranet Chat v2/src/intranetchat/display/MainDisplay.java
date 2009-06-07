@@ -428,6 +428,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         //this method will add the message if it is meant for the main display
         String[] breakup = input.split("~");
         int i = Integer.parseInt(breakup[1]);
+        //Public chat messages will be read here
         if(i == 1){
             String s;
             i = Integer.parseInt(breakup[0]);
@@ -436,6 +437,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                 sounds.newMessageIncoming();
             }
             this.appendMessage(s,null);
+        //System messages will be read here
         }else if(i == 2){
              switch(Integer.parseInt(breakup[3])){
                 case 1:
@@ -484,7 +486,17 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                     break;
 
                 case 5:
-  
+                    //Incoming file transfer
+                    if(Integer.parseInt(breakup[2])== values.networkID){
+                        int resp = JOptionPane.showConfirmDialog(this, breakup[4]+" is sending you "+breakup[5]+", do you want to download ?", "File transfer", JOptionPane.YES_NO_OPTION);
+                        if(resp == JOptionPane.YES_OPTION){
+                            //Agreed to the download start the file transfer
+                            System.out.println("YES");
+                        }else{
+                            //no download to take place
+                            System.out.println("NO");
+                        }
+                    }
                     break;
             }
         }

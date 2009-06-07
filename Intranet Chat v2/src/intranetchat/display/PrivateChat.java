@@ -20,10 +20,12 @@ import intranetchat.saving.SavedValues;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -241,7 +243,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void sendMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMousePressed
-
+        this.sendFile();
     }//GEN-LAST:event_sendMousePressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -455,5 +457,30 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
                 }
             }
         }
+    }
+
+    private void sendFile(){
+        File f;
+        JFileChooser chooser = new JFileChooser();
+        int r = chooser.showOpenDialog(this);
+        if(r == JFileChooser.APPROVE_OPTION){
+            f = chooser.getSelectedFile();
+        }else{
+            return;
+        }
+        String ip = "192.168.2.7";
+
+        StringBuffer buf = new StringBuffer("2~");
+        buf.append(destinationID+"~");
+        buf.append("5~");
+        buf.append(values.networkName+"~");
+        buf.append(f.getName()+"~");
+        buf.append(f.length()+"~");
+        buf.append(ip+"~");
+
+        try{
+        network.sendMulticast(new String(buf));
+        }catch(IOException ex){}
+
     }
 }
