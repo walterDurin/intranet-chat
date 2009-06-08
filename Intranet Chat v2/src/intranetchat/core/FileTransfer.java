@@ -42,6 +42,7 @@ public class FileTransfer extends Observable implements Observer{
                     if(Integer.parseInt(breakup[2]) == values.networkID){
                         if(breakup[5].compareTo("YES")==0){
                             authenticated = true;
+                            
                         }else{
                             authenticated = false;
                         }
