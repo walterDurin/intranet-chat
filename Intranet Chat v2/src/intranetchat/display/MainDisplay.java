@@ -23,6 +23,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Calendar;
@@ -143,7 +144,6 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollPane1.setAutoscrolls(true);
         jScrollPane1.setMaximumSize(new java.awt.Dimension(500, 350));
-        jScrollPane1.setMinimumSize(new java.awt.Dimension(25, 25));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(500, 350));
 
         incomingData.setEditable(false);
@@ -612,7 +612,12 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         network.sendMulticast("2~"+values.networkName+"~3~");
         }catch(IOException ex){}
         if(values.publicLog){
-            values.saveLog("log\\"+this.getTimeStamp()+"Public.txt", new String(log));
+            File f = new File("log");
+            if(!f.isDirectory()){
+                f.mkdir();
+            }
+            f = new File("log/"+this.getTimeStamp()+"Public.txt");
+            values.saveLog(f.getPath(), new String(log));
         }
     }
 
