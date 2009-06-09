@@ -68,11 +68,17 @@ public class Preference extends javax.swing.JDialog {
         backColour = new javax.swing.JButton();
         bColorPanel = new javax.swing.JPanel();
         fColorPanel = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        sysColorPanel = new javax.swing.JPanel();
+        sysColour = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         lfCombo = new javax.swing.JComboBox();
         sOnline = new javax.swing.JCheckBox();
         sMessage = new javax.swing.JCheckBox();
+        autoAccept = new javax.swing.JCheckBox();
+        jTextField2 = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -89,7 +95,7 @@ public class Preference extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel1.add(jLabel1, gridBagConstraints);
 
-        username.setPreferredSize(new java.awt.Dimension(300, 20));
+        username.setPreferredSize(new java.awt.Dimension(300, 27));
         jPanel1.add(username, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -129,7 +135,7 @@ public class Preference extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel2.add(encrypted, gridBagConstraints);
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(280, 20));
+        jTextField1.setPreferredSize(new java.awt.Dimension(280, 27));
         jPanel2.add(jTextField1, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -139,37 +145,42 @@ public class Preference extends javax.swing.JDialog {
         getContentPane().add(jPanel2, gridBagConstraints);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Font"));
-        jPanel3.setPreferredSize(new java.awt.Dimension(400, 170));
+        jPanel3.setPreferredSize(new java.awt.Dimension(400, 210));
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
         jLabel3.setText("Font Name :");
-        jPanel3.add(jLabel3, new java.awt.GridBagConstraints());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel3.add(jLabel3, gridBagConstraints);
 
         jLabel4.setText("Font Type :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel3.add(jLabel4, gridBagConstraints);
 
         jLabel5.setText("Font Size :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel3.add(jLabel5, gridBagConstraints);
 
         jLabel6.setText("Font Colour :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel3.add(jLabel6, gridBagConstraints);
 
         jLabel7.setText("Background Colour :");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         jPanel3.add(jLabel7, gridBagConstraints);
 
-        fontCombo.setPreferredSize(new java.awt.Dimension(250, 20));
+        fontCombo.setPreferredSize(new java.awt.Dimension(240, 27));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.insets = new java.awt.Insets(1, 0, 1, 0);
@@ -213,25 +224,51 @@ public class Preference extends javax.swing.JDialog {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         jPanel3.add(backColour, gridBagConstraints);
 
-        bColorPanel.setPreferredSize(new java.awt.Dimension(23, 23));
+        bColorPanel.setPreferredSize(new java.awt.Dimension(100, 23));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         jPanel3.add(bColorPanel, gridBagConstraints);
 
-        fColorPanel.setPreferredSize(new java.awt.Dimension(23, 23));
+        fColorPanel.setPreferredSize(new java.awt.Dimension(100, 23));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         jPanel3.add(fColorPanel, gridBagConstraints);
+
+        jLabel9.setText("System Colour : ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel3.add(jLabel9, gridBagConstraints);
+
+        sysColorPanel.setPreferredSize(new java.awt.Dimension(100, 23));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        jPanel3.add(sysColorPanel, gridBagConstraints);
+
+        sysColour.setText("Select Colour");
+        sysColour.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                sysColourMousePressed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        jPanel3.add(sysColour, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -240,13 +277,13 @@ public class Preference extends javax.swing.JDialog {
         getContentPane().add(jPanel3, gridBagConstraints);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Others"));
-        jPanel4.setPreferredSize(new java.awt.Dimension(400, 120));
+        jPanel4.setPreferredSize(new java.awt.Dimension(400, 170));
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
         jLabel8.setText("Program Look and Feel :");
         jPanel4.add(jLabel8, new java.awt.GridBagConstraints());
 
-        lfCombo.setPreferredSize(new java.awt.Dimension(230, 20));
+        lfCombo.setPreferredSize(new java.awt.Dimension(230, 27));
         jPanel4.add(lfCombo, new java.awt.GridBagConstraints());
 
         sOnline.setText("Alert when a user appears online");
@@ -264,6 +301,35 @@ public class Preference extends javax.swing.JDialog {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanel4.add(sMessage, gridBagConstraints);
+
+        autoAccept.setText("Auto Accept Downloads");
+        autoAccept.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                autoAcceptStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel4.add(autoAccept, gridBagConstraints);
+
+        jTextField2.setPreferredSize(new java.awt.Dimension(250, 27));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel4.add(jTextField2, gridBagConstraints);
+
+        jButton3.setText("Browse");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        jPanel4.add(jButton3, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -325,7 +391,19 @@ public class Preference extends javax.swing.JDialog {
         }
 }//GEN-LAST:event_backColourMouseReleased
 
+    private void sysColourMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sysColourMousePressed
+        Color sysColor = JColorChooser.showDialog(this,"Choose System Color",getBackground());
+        if(sysColor != null){
+            sysColorPanel.setBackground(sysColor);
+        }
+    }//GEN-LAST:event_sysColourMousePressed
+
+    private void autoAcceptStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_autoAcceptStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_autoAcceptStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox autoAccept;
     private javax.swing.JPanel bColorPanel;
     private javax.swing.JButton backColour;
     private javax.swing.JCheckBox encrypted;
@@ -334,6 +412,7 @@ public class Preference extends javax.swing.JDialog {
     private javax.swing.JComboBox fontCombo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -342,17 +421,21 @@ public class Preference extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JComboBox lfCombo;
     private javax.swing.JCheckBox privateLog;
     private javax.swing.JCheckBox publicLog;
     private javax.swing.JCheckBox sMessage;
     private javax.swing.JCheckBox sOnline;
     private javax.swing.JComboBox sizeCombo;
+    private javax.swing.JPanel sysColorPanel;
+    private javax.swing.JButton sysColour;
     private javax.swing.JComboBox typeCombo;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
@@ -367,7 +450,8 @@ public class Preference extends javax.swing.JDialog {
         sMessage.setSelected(values.soundMessage);
         fColorPanel.setBackground(values.foreGround);
         bColorPanel.setBackground(values.background);
-        fontCombo.setSelectedItem(values.font.getFontName());
+        sysColorPanel.setBackground(values.systemColour);
+        fontCombo.setSelectedItem(values.font.getName());
         sizeCombo.setSelectedItem(values.font.getSize()+"");
         if(values.font.isPlain()){
             typeCombo.setSelectedIndex(0);
@@ -391,6 +475,7 @@ public class Preference extends javax.swing.JDialog {
         values.soundMessage = sMessage.isSelected();
         values.foreGround = fColorPanel.getBackground();
         values.background = bColorPanel.getBackground();
+        values.systemColour = sysColorPanel.getBackground();
         values.landf = (String)lfCombo.getSelectedItem();
         values.font = Font.decode(fontCombo.getSelectedItem()+"-"+typeCombo.getSelectedItem()+"-"+sizeCombo.getSelectedItem());
 
