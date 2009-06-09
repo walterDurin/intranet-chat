@@ -11,7 +11,6 @@
 
 package intranetchat.display;
 
-import intranetchat.core.ChatEncryption;
 import intranetchat.core.NetworkInterface;
 import intranetchat.core.NetworkListener;
 import intranetchat.core.PrivateChatCollection;
@@ -449,6 +448,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
 
                 case 2:
                     if(userscol.userExists(breakup[0])){
+                        this.usernameChanged(breakup[0], breakup[2]);
                         int k = userscol.replaceUsername(breakup[0], breakup[2]);
                         String[] s = {breakup[2],breakup[0]};
                         list.set(k, s);
@@ -462,7 +462,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                         userscol.addUser(s);
                         String[] sa = {breakup[2],breakup[0]};
                         list.addElement(sa);
-                        appendMessage(getTime()+": "+breakup[2]+" has joined \n",Color.RED);
+                        appendMessage(getTime()+": "+breakup[2]+" has joined \n",values.systemColour);
                         if(breakup[0].compareTo(values.networkID+"")!=0){
                             sounds.newUserEntered();
                         }
@@ -474,7 +474,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                     j = userscol.removeUser(breakup[0]);
                     if(j != -1){
                         list.remove(j);
-                        appendMessage(getTime()+": "+breakup[2]+" has left \n",Color.RED);
+                        appendMessage(getTime()+": "+breakup[2]+" has left \n",values.systemColour);
                         if(breakup[0].compareTo(values.networkID+"")!=0){
                             sounds.UserLeft();
                         }
@@ -600,6 +600,9 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         }
     }
 
+    /**
+     *
+     */
     public void saving(){
         values.networkName = userName.getText();
         values.x = this.getX();
@@ -612,5 +615,12 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
             values.saveLog("log\\"+this.getTimeStamp()+"Public.txt", new String(log));
         }
     }
+
+    private void usernameChanged(String id, String newName){
+        Users u = userscol.getUser(id);
+        String s = getTime()+": "+u.getUsername()+" has changed to "+newName+"\n";
+        appendMessage(s,values.systemColour);
+    }
+
 
 }

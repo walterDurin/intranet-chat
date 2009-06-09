@@ -38,6 +38,8 @@ public class SavedValues extends Observable {
     public Color background;
     /** The font colour of the program **/
     public Color foreGround;
+    /** This is the system message colour **/
+    public Color systemColour;
     /** Whether the sound effect is played when another user enters **/
     public boolean soundEntrance;
     /** Whether the sound effect is played when a message is received **/
@@ -69,7 +71,8 @@ public class SavedValues extends Observable {
         y = 200;
         background = Color.WHITE;
         foreGround = Color.BLACK;
-        font = new Font("Trebuchet MS",Font.PLAIN,12);
+        systemColour = Color.RED;
+        font = new Font("Dialog",Font.PLAIN,12);
         landf = "Metal";
         soundEntrance = false;
         soundMessage = false;
