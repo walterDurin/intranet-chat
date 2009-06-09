@@ -50,7 +50,15 @@ public class SavedValues extends Observable {
     public boolean publicLog;
     /** Whethere the private chat message are encrypted **/
     public boolean encrypted;
+    /** Sets whether the program will auto accept file transfers**/
+    public boolean autoAccept;
+    /** the location of the folder to save the files **/
+    public String savedLocation;
 
+    /**
+     *
+     * @return
+     */
     public static synchronized SavedValues getInstance(){
         if(instance == null){
             instance = new SavedValues();
@@ -79,6 +87,8 @@ public class SavedValues extends Observable {
         privateLog = false;
         publicLog = false;
         encrypted = false;
+        autoAccept = false;
+        savedLocation = "Downloads/";
     }
 
     /**
@@ -94,13 +104,16 @@ public class SavedValues extends Observable {
         y = Integer.parseInt(variableArray[4]);
         background = this.getColour(variableArray[5]);
         foreGround = this.getColour(variableArray[6]);
-        font = this.getUserFont(variableArray[7]);
-        landf = variableArray[8];
-        soundEntrance = this.intConverter(Integer.parseInt(variableArray[9]));
-        soundMessage = this.intConverter(Integer.parseInt(variableArray[10]));
-        privateLog = this.intConverter(Integer.parseInt(variableArray[11]));
-        publicLog = this.intConverter(Integer.parseInt(variableArray[12]));
-        encrypted = this.intConverter(Integer.parseInt(variableArray[13]));
+        systemColour = this.getColour(variableArray[7]);
+        font = this.getUserFont(variableArray[8]);
+        landf = variableArray[9];
+        soundEntrance = this.intConverter(Integer.parseInt(variableArray[10]));
+        soundMessage = this.intConverter(Integer.parseInt(variableArray[11]));
+        privateLog = this.intConverter(Integer.parseInt(variableArray[12]));
+        publicLog = this.intConverter(Integer.parseInt(variableArray[13]));
+        encrypted = this.intConverter(Integer.parseInt(variableArray[14]));
+        autoAccept = this.intConverter(Integer.parseInt(variableArray[15]));
+        savedLocation = variableArray[16];
     }
 
     /**
@@ -131,6 +144,8 @@ public class SavedValues extends Observable {
         buf.append(s+"/z");
         s = foreGround.getRed()+","+foreGround.getGreen()+","+foreGround.getBlue()+",";
         buf.append(s+"/z");
+        s = systemColour.getRed()+","+systemColour.getGreen()+","+systemColour.getBlue()+",";
+        buf.append(s+"/z");
         s = font.getName()+","+font.getStyle()+","+font.getSize();
         buf.append(s+"/z");
         buf.append(landf+"/z");
@@ -139,6 +154,8 @@ public class SavedValues extends Observable {
         buf.append(booleanConverter(privateLog)+"/z");
         buf.append(booleanConverter(publicLog)+"/z");
         buf.append(booleanConverter(encrypted)+"/z");
+        buf.append(booleanConverter(autoAccept)+"/z");
+        buf.append(savedLocation+"/z");
         String out = new String(buf);
         writer.writeFile(path, out);
     }

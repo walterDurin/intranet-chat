@@ -77,7 +77,7 @@ public class Preference extends javax.swing.JDialog {
         sOnline = new javax.swing.JCheckBox();
         sMessage = new javax.swing.JCheckBox();
         autoAccept = new javax.swing.JCheckBox();
-        jTextField2 = new javax.swing.JTextField();
+        savedLoc = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -316,13 +316,13 @@ public class Preference extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel4.add(autoAccept, gridBagConstraints);
 
-        jTextField2.setPreferredSize(new java.awt.Dimension(250, 27));
+        savedLoc.setPreferredSize(new java.awt.Dimension(250, 27));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel4.add(jTextField2, gridBagConstraints);
+        jPanel4.add(savedLoc, gridBagConstraints);
 
         jButton3.setText("Browse");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -427,12 +427,12 @@ public class Preference extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JComboBox lfCombo;
     private javax.swing.JCheckBox privateLog;
     private javax.swing.JCheckBox publicLog;
     private javax.swing.JCheckBox sMessage;
     private javax.swing.JCheckBox sOnline;
+    private javax.swing.JTextField savedLoc;
     private javax.swing.JComboBox sizeCombo;
     private javax.swing.JPanel sysColorPanel;
     private javax.swing.JButton sysColour;
@@ -460,6 +460,9 @@ public class Preference extends javax.swing.JDialog {
         }else if(values.font.isItalic()){
             typeCombo.setSelectedIndex(2);
         }
+        autoAccept.setSelected(values.autoAccept);
+        savedLoc.setText(values.savedLocation);
+
         this.pack();
 
 
@@ -478,7 +481,8 @@ public class Preference extends javax.swing.JDialog {
         values.systemColour = sysColorPanel.getBackground();
         values.landf = (String)lfCombo.getSelectedItem();
         values.font = Font.decode(fontCombo.getSelectedItem()+"-"+typeCombo.getSelectedItem()+"-"+sizeCombo.getSelectedItem());
-
+        values.autoAccept = autoAccept.isSelected();
+        values.savedLocation = savedLoc.getText();
     }
 
     private void collectData(){
