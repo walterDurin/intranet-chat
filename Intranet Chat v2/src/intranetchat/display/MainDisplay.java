@@ -601,7 +601,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     }
 
     /**
-     *
+     * This is where the saving of the program variables takes place
      */
     public void saving(){
         values.networkName = userName.getText();
@@ -621,6 +621,11 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         }
     }
 
+    /**
+     * This state of the name change on the main display
+     * @param id
+     * @param newName
+     */
     private void usernameChanged(String id, String newName){
         Users u = userscol.getUser(id);
         String s = getTime()+": "+u.getUsername()+" has changed to "+newName+"\n";
