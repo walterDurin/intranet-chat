@@ -12,6 +12,7 @@
 package intranetchat.display;
 
 import intranetchat.core.FileTransfer;
+import intranetchat.saving.SavedValues;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -20,13 +21,14 @@ import java.util.Observer;
  * @author Philip
  */
 public class FileTransferDialog extends javax.swing.JDialog implements Observer{
+    SavedValues values = SavedValues.getInstance();
 
     /** Creates new form FileTransferDialog */
     public FileTransferDialog(java.awt.Frame parent, boolean modal,Observable o) {
         super(parent, modal);
         initComponents();
         o.addObserver(this);
-
+        this.setLocation(values.x, values.y);
     }
 
     /** This method is called from within the constructor to

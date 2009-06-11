@@ -11,6 +11,7 @@
 
 package intranetchat.display;
 
+import intranetchat.core.FileTransfer;
 import intranetchat.core.NetworkInterface;
 import intranetchat.core.NetworkListener;
 import intranetchat.core.PrivateChatCollection;
@@ -493,6 +494,10 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                             //Agreed to the download start the file transfer
                             System.out.println("YES");
                             //send confermation back to the server
+
+                            FileTransfer transfer = new FileTransfer();
+                            FileTransferDialog display = new FileTransferDialog(this,false,transfer);
+                            display.setDisplay(values.networkName, breakup[4], breakup[5]);
                         }else{
                             //no download to take place
                             System.out.println("NO");
