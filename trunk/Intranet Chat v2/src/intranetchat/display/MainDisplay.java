@@ -623,8 +623,8 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
 
     /**
      * This state of the name change on the main display
-     * @param id
-     * @param newName
+     * @param id id of the user changing there name
+     * @param newName the new name that they are changing to
      */
     private void usernameChanged(String id, String newName){
         Users u = userscol.getUser(id);

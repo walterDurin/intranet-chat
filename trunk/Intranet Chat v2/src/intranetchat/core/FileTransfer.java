@@ -62,4 +62,10 @@ public class FileTransfer extends Observable implements Observer{
         return position;
     }
 
+    public String getLocalIP(){
+
+
+        return "192.168.2.7";
+    }
+
 }

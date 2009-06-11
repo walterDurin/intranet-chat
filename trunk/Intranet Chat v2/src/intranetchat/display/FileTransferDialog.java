@@ -22,9 +22,11 @@ import java.util.Observer;
 public class FileTransferDialog extends javax.swing.JDialog implements Observer{
 
     /** Creates new form FileTransferDialog */
-    public FileTransferDialog(java.awt.Frame parent, boolean modal) {
+    public FileTransferDialog(java.awt.Frame parent, boolean modal,Observable o) {
         super(parent, modal);
         initComponents();
+        o.addObserver(this);
+
     }
 
     /** This method is called from within the constructor to
@@ -51,12 +53,14 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Source Name : ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 0);
         getContentPane().add(jLabel1, gridBagConstraints);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Destination Name : ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -65,6 +69,7 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
         gridBagConstraints.insets = new java.awt.Insets(0, 3, 3, 0);
         getContentPane().add(jLabel2, gridBagConstraints);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Filename : ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -73,6 +78,7 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
         gridBagConstraints.insets = new java.awt.Insets(0, 3, 3, 0);
         getContentPane().add(jLabel3, gridBagConstraints);
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Current Status : ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -101,11 +107,13 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 3);
         getContentPane().add(jButton1, gridBagConstraints);
 
+        sourceName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         sourceName.setText("s");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(sourceName, gridBagConstraints);
 
+        destinationName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         destinationName.setText("d");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -113,6 +121,7 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(destinationName, gridBagConstraints);
 
+        fileName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         fileName.setText("f");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -120,7 +129,8 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(fileName, gridBagConstraints);
 
-        currentStatus.setText("cs");
+        currentStatus.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        currentStatus.setText("Waiting for authorization");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -150,6 +160,14 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
         if(o instanceof FileTransfer){
             
         }
+    }
+
+    public void setDisplay(String dest,String source,String filename){
+        destinationName.setText(dest);
+        sourceName.setText(source);
+        fileName.setText(filename);
+        
+        this.setVisible(true);
     }
 
 }
