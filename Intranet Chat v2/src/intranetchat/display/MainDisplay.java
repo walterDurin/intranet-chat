@@ -632,9 +632,12 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
      * @param newName the new name that they are changing to
      */
     private void usernameChanged(String id, String newName){
+
         Users u = userscol.getUser(id);
-        String s = getTime()+": "+u.getUsername()+" has changed to "+newName+"\n";
-        appendMessage(s,values.systemColour);
+        if(u.getUsername().compareTo(newName)!= 0){
+            String s = getTime()+": "+u.getUsername()+" has changed to "+newName+"\n";
+            appendMessage(s,values.systemColour);
+        }
     }
 
 
