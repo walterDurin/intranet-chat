@@ -12,6 +12,7 @@
 package intranetchat.display;
 
 import intranetchat.core.ChatEncryption;
+import intranetchat.core.FileTransfer;
 import intranetchat.core.NetworkInterface;
 import intranetchat.core.NetworkListener;
 import intranetchat.core.PrivateChatCollection;
@@ -358,8 +359,6 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         this.setDisplayLF(values.landf);
     }
 
-
-
     /**
      * Sets the font that is being used by the gui
      * @param f the font selected
@@ -468,7 +467,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         }else{
             return;
         }
-        String ip = "192.168.2.7";
+        FileTransfer transfer = new FileTransfer();
 
         StringBuffer buf = new StringBuffer("2~");
         buf.append(destinationID+"~");
@@ -476,11 +475,13 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         buf.append(values.networkName+"~");
         buf.append(f.getName()+"~");
         buf.append(f.length()+"~");
-        buf.append(ip+"~");
+        buf.append(transfer.getLocalIP()+"~");
 
         try{
         network.sendMulticast(new String(buf));
         }catch(IOException ex){}
-
+        transfer.sendFile(f);
+        FileTransferDialog d = new FileTransferDialog(this,false,transfer);
+        d.setDisplay( destinationName, values.networkName, f.getName());
     }
 }
