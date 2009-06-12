@@ -31,6 +31,9 @@ public class Preference extends javax.swing.JDialog {
         values = SavedValues.getInstance();
         this.setLocation(values.x+50, values.y+50);
         initComponents();
+        fontCombo.setRenderer(new FontComboRenderer());
+        typeCombo.setRenderer(new FontComboRenderer());
+        sizeCombo.setRenderer(new FontComboRenderer());
         collectData();
         this.getSavedData();
         this.setVisible(true);
@@ -180,6 +183,7 @@ public class Preference extends javax.swing.JDialog {
         gridBagConstraints.gridy = 5;
         jPanel3.add(jLabel7, gridBagConstraints);
 
+        fontCombo.setOpaque(false);
         fontCombo.setPreferredSize(new java.awt.Dimension(240, 27));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = 2;
@@ -187,6 +191,7 @@ public class Preference extends javax.swing.JDialog {
         jPanel3.add(fontCombo, gridBagConstraints);
 
         typeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Plain", "Bold", "Italic" }));
+        typeCombo.setPreferredSize(new java.awt.Dimension(240, 27));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -196,6 +201,7 @@ public class Preference extends javax.swing.JDialog {
         jPanel3.add(typeCombo, gridBagConstraints);
 
         sizeCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24" }));
+        sizeCombo.setPreferredSize(new java.awt.Dimension(240, 27));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
