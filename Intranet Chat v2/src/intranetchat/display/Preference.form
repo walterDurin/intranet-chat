@@ -210,6 +210,7 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="fontCombo">
           <Properties>
+            <Property name="opaque" type="boolean" value="false"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[240, 27]"/>
             </Property>
@@ -228,6 +229,9 @@
                 <StringItem index="1" value="Bold"/>
                 <StringItem index="2" value="Italic"/>
               </StringArray>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[240, 27]"/>
             </Property>
           </Properties>
           <Constraints>
@@ -257,6 +261,9 @@
                 <StringItem index="14" value="23"/>
                 <StringItem index="15" value="24"/>
               </StringArray>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[240, 27]"/>
             </Property>
           </Properties>
           <Constraints>
