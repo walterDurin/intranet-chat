@@ -31,13 +31,13 @@ public class Sounds {
         values = SavedValues.getInstance();
         try {
             //Sound for people entering chat
-            URL url = new URL(getClass().getResource("dooropen.wav"), "dooropen.wav");
+            URL url = new URL(getClass().getResource("online.wav"), "online.wav");
             userJoinClip = Applet.newAudioClip(url);
             //Sound for people leaving chat
-            url = new URL(getClass().getResource("doorslam.wav"),"doorslam.wav");
+            url = new URL(getClass().getResource("offline.wav"),"offline.wav");
             userLeaveClip = Applet.newAudioClip(url);
             //Sound for incoming message
-            url = new URL(getClass().getResource("imsend.wav"),"imsend.wav");
+            url = new URL(getClass().getResource("alert.wav"),"alert.wav");
             messClip = Applet.newAudioClip(url);
         } catch (IOException e){
             //thrown if the program cannot find the sound files in the jar

@@ -76,7 +76,7 @@ public class Main {
             display.traySupported = false;
             return;
         }
-        icon = new TrayIcon(createImage("tray_clr.png", "tray icon"));
+        icon = new TrayIcon(createImage("icon.png", "tray icon"));
         PopupMenu menu = new PopupMenu();
         SystemTray tray = SystemTray.getSystemTray();
         //creates all the menu items
