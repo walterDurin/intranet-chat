@@ -23,6 +23,8 @@ import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Calendar;
 import java.util.Observable;
 import java.util.Observer;
@@ -467,7 +469,6 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         }else{
             return;
         }
-        FileTransfer transfer = new FileTransfer();
 
         StringBuffer buf = new StringBuffer("2~");
         buf.append(destinationID+"~");
@@ -475,13 +476,24 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         buf.append(values.networkName+"~");
         buf.append(f.getName()+"~");
         buf.append(f.length()+"~");
-        buf.append(transfer.getLocalIP()+"~");
+        buf.append(getLocalIP()+"~");
 
         try{
         network.sendMulticast(new String(buf));
         }catch(IOException ex){}
-        transfer.sendFile(f);
-        FileTransferDialog d = new FileTransferDialog(this,false,transfer);
-        d.setDisplay( destinationName, values.networkName, f.getName());
+        //this is all then passed off to the network listener in the main program
+    }
+
+    /**
+     * Gets the local hosts ip address for the file transfer
+     * @return local ip address
+     */
+    public String getLocalIP(){
+        String address = null;
+        try{
+        InetAddress ip = InetAddress.getLocalHost();
+        address = ip.getHostAddress();
+        }catch(UnknownHostException ex){}
+        return address;
     }
 }

@@ -66,7 +66,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         list = new DefaultListModel();
         log = new StringBuffer("");
         try {
-            icon = javax.imageio.ImageIO.read(new java.net.URL(getClass().getResource("tray_clr.png"), "tray_clr.png"));
+            icon = javax.imageio.ImageIO.read(new java.net.URL(getClass().getResource("icon.png"), "icon.png"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -440,6 +440,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         //System messages will be read here
         }else if(i == 2){
              switch(Integer.parseInt(breakup[3])){
+                 //Another Client program has requested all the other users names
                 case 1:
                     try{
                         InetAddress thisIp = InetAddress.getLocalHost();
@@ -447,6 +448,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                     }catch(IOException e){}
                     break;
 
+                // other users have responded and returned there names and unique ids
                 case 2:
                     if(userscol.userExists(breakup[0])){
                         this.usernameChanged(breakup[0], breakup[2]);
@@ -470,6 +472,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                     }
                     break;
 
+                //a user has left the group and alerted everyone else that they have left
                 case 3:
                     int j = 0;
                     j = userscol.removeUser(breakup[0]);
@@ -482,34 +485,49 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                     }
                     break;
 
-                case 4:
-                    System.exit(0);
-                    break;
-
+                //another client wants to send a file
                 case 5:
                     //Incoming file transfer
                     if(Integer.parseInt(breakup[2])== values.networkID){
                         int resp = JOptionPane.showConfirmDialog(this, breakup[4]+" is sending you "+breakup[5]+", do you want to download ?", "File transfer", JOptionPane.YES_NO_OPTION);
                         if(resp == JOptionPane.YES_OPTION){
                             //Agreed to the download start the file transfer
-                            System.out.println("YES");
-                            //send confermation back to the server
-
-                            FileTransfer transfer = new FileTransfer();
-                            FileTransferDialog display = new FileTransferDialog(this,false,transfer);
-                            display.setDisplay(values.networkName, breakup[4], breakup[5]);
+                            sendTransferReply("YES");
+                            //start the file transfer client here
                         }else{
                             //no download to take place
-                            System.out.println("NO");
-                            //send denial back to server
+                            sendTransferReply("NO");
                         }
                     }
+                    break;
+
+                // a client as responded to a transfer request
+                case 6:
+
                     break;
             }
         }
 
     }
 
+    /**
+     * Sends a relpy to the file server to whether the file transfer will take place
+     * @param resp the responce code
+     */
+    private void sendTransferReply(String resp){
+        StringBuffer buf = new StringBuffer("2~");
+        buf.append(values.networkName+"~");
+        buf.append("6~");
+        buf.append(resp+"~");
+        try{
+            network.sendMulticast(new String(buf));
+        }catch(IOException ex){}
+    }
+
+    /**
+     * returns the time so that it can be displayed on the main screen to indicate what time the message was received
+     * @return the current time in a [hour:minute:second] Format
+     */
     private String getTime(){
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR);
@@ -531,6 +549,10 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         return "["+h+":"+minute+":"+second+"]";
     }
 
+    /**
+     * returns a timestamp that gets used to save individual log file at the time when the program is exited
+     * @return a time stamp with year,month,day,hour and minute
+     */
     private String getTimeStamp(){
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -538,7 +560,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         int year = calendar.get(Calendar.YEAR);
         int hour = calendar.get(Calendar.HOUR);
         int minute = calendar.get(Calendar.MINUTE);
-        return day+""+month+""+year+""+hour+""+minute;
+        return year+""+month+""+day+""+hour+""+minute;
     }
 
     /**

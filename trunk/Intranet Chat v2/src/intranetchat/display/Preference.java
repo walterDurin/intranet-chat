@@ -15,7 +15,9 @@ import intranetchat.saving.SavedValues;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.io.File;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 
 /**
@@ -82,6 +84,7 @@ public class Preference extends javax.swing.JDialog {
         autoAccept = new javax.swing.JCheckBox();
         savedLoc = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -283,7 +286,7 @@ public class Preference extends javax.swing.JDialog {
         getContentPane().add(jPanel3, gridBagConstraints);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Others"));
-        jPanel4.setPreferredSize(new java.awt.Dimension(400, 170));
+        jPanel4.setPreferredSize(new java.awt.Dimension(400, 190));
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
         jLabel8.setText("Program Look and Feel :");
@@ -325,17 +328,31 @@ public class Preference extends javax.swing.JDialog {
         savedLoc.setPreferredSize(new java.awt.Dimension(250, 27));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 0);
         jPanel4.add(savedLoc, gridBagConstraints);
 
         jButton3.setText("Browse");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton3MousePressed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         jPanel4.add(jButton3, gridBagConstraints);
+
+        jLabel10.setText("Saved File Location :");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
+        jPanel4.add(jLabel10, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -352,8 +369,9 @@ public class Preference extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 6);
+        gridBagConstraints.ipadx = 24;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
         getContentPane().add(jButton1, gridBagConstraints);
 
         jButton2.setText("Cancel");
@@ -366,7 +384,7 @@ public class Preference extends javax.swing.JDialog {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
+        gridBagConstraints.insets = new java.awt.Insets(3, 4, 3, 0);
         getContentPane().add(jButton2, gridBagConstraints);
 
         pack();
@@ -405,8 +423,19 @@ public class Preference extends javax.swing.JDialog {
     }//GEN-LAST:event_sysColourMousePressed
 
     private void autoAcceptStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_autoAcceptStateChanged
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_autoAcceptStateChanged
+
+    private void jButton3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MousePressed
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int returnValue = chooser.showOpenDialog(this);
+        if(returnValue == JFileChooser.APPROVE_OPTION){
+            File f = chooser.getSelectedFile();
+            savedLoc.setText(f.getAbsolutePath()+"/");
+        }
+
+    }//GEN-LAST:event_jButton3MousePressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox autoAccept;
@@ -420,6 +449,7 @@ public class Preference extends javax.swing.JDialog {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
