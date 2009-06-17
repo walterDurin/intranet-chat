@@ -34,44 +34,6 @@ public class FileTransfer extends Observable implements Observer{
         values = SavedValues.getInstance();
     }
 
-<<<<<<< .mine
-    public byte[] getFile(String ip,int fileSize){
-        try{
-            int bytesRead;
-            int current = 0;
-            Socket sock = new Socket(ip,4000);
-            byte [] mybytearray  = new byte [fileSize];
-            InputStream is = sock.getInputStream();
-            bytesRead = is.read(mybytearray,0,mybytearray.length);
-            current = bytesRead;
-            do {
-                bytesRead = is.read(mybytearray, current, (mybytearray.length-current));
-                if(bytesRead >= 0) current += bytesRead;
-            } while(bytesRead > -1);
-            sock.close();
-            return mybytearray;
-        }catch(IOException e){}
-        return null;
-=======
-    public void sendFile(File f){
-        //wrap in a new thread
-//        try{
-//            ServerSocket servsock = new ServerSocket(4000);
-//            Socket sock = servsock.accept();
-//            byte [] mybytearray  = new byte [(int)f.length()];
-//            FileInputStream fis = new FileInputStream(f);
-//            BufferedInputStream bis = new BufferedInputStream(fis);
-//            bis.read(mybytearray,0,mybytearray.length);
-//            OutputStream os = sock.getOutputStream();
-//            os.write(mybytearray,0,mybytearray.length);
-//            os.flush();
-//            sock.close();
-//        }catch(IOException ex){}
->>>>>>> .r83
-    }
-
-<<<<<<< .mine
-=======
     public byte[] getFile(String ip,int fileSize){
         try{
             int bytesRead;
@@ -90,8 +52,6 @@ public class FileTransfer extends Observable implements Observer{
         }catch(IOException e){}
         return null;
     }
-
->>>>>>> .r83
     public void update(Observable o, Object arg) {
         if(o instanceof NetworkListener){
             NetworkListener nl = (NetworkListener)o;
