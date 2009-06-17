@@ -12,6 +12,7 @@
 package intranetchat.display;
 
 import intranetchat.core.ChatEncryption;
+import intranetchat.core.FileServer;
 import intranetchat.core.FileTransfer;
 import intranetchat.core.NetworkInterface;
 import intranetchat.core.NetworkListener;
@@ -479,9 +480,16 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         buf.append(getLocalIP()+"~");
 
         try{
-        network.sendMulticast(new String(buf));
+            network.sendMulticast(new String(buf));
         }catch(IOException ex){}
-        //this is all then passed off to the network listener in the main program
+
+
+        //start a file server and display
+        Observable obs = new FileServer(f);
+        FileTransferDialog display = new FileTransferDialog(this,false,obs);
+        display.setDisplay(destinationName, values.networkName, f.getName());
+        (new Thread((FileServer)obs)).start();
+        //the thread will complete the transfer and then kill it's self
     }
 
     /**
