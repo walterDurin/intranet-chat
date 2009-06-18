@@ -45,7 +45,7 @@ public class Main {
         values = SavedValues.getInstance();
         values.importValues(SavedValues.DEFAULT_PATH);
         this.startTrayIcon();
-        NetworkInterface network = NetworkInterface.getInstance();
+        MulticastInterface network = MulticastInterface.getInstance();
         Observable obs = new NetworkListener();
         display = new MainDisplay(obs, network);
         (new Thread((NetworkListener)obs)).start();

@@ -14,6 +14,9 @@ package intranetchat.display;
 import intranetchat.saving.SavedValues;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 
 /**
  *
@@ -27,10 +30,7 @@ public class About extends javax.swing.JDialog {
         SavedValues values = SavedValues.getInstance();
         initComponents();
         this.setLocation(values.x+50, values.y+50);
-        try{
-            InetAddress thisIp = InetAddress.getLocalHost();
-            jLabel8.setText("IP Address : "+thisIp.getHostAddress());
-        }catch(IOException ex){}
+        jLabel8.setText("IP Address : "+getIP());
         jLabel6.setText("JVM Version : "+System.getProperty("java.version"));
         jLabel7.setText("OS : "+System.getProperty("os.name"));
         this.setVisible(true);
@@ -179,4 +179,21 @@ public class About extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
+    private String getIP(){
+        try{
+            Enumeration e = NetworkInterface.getNetworkInterfaces();
+            while(e.hasMoreElements()){
+                NetworkInterface n = (NetworkInterface)e.nextElement();
+                Enumeration inet = n.getInetAddresses();
+                while(inet.hasMoreElements()){
+                    InetAddress i = (InetAddress) inet.nextElement();
+                    if((!i.isLoopbackAddress())&&(i.isSiteLocalAddress())){
+                        return i.getHostAddress();
+                    }
+
+                }
+            }
+        }catch(SocketException ex){}
+        return "";
+    }
 }
