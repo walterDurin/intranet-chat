@@ -15,7 +15,7 @@ import java.util.Observable;
  * @author Philip White
  */
 public class NetworkListener extends Observable implements Runnable{
-    private NetworkInterface network;
+    private MulticastInterface network;
     private String incoming;
     public void NetworkListener(){
 
@@ -26,7 +26,7 @@ public class NetworkListener extends Observable implements Runnable{
      * loop to listen for messages
      */
     public void run() {
-        network = NetworkInterface.getInstance();
+        network = MulticastInterface.getInstance();
         while(true){
             String s = network.recieveMulticast();
             this.messageRecieved(s);

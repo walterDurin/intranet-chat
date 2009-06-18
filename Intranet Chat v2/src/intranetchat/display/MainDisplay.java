@@ -11,8 +11,8 @@
 
 package intranetchat.display;
 
-import intranetchat.core.FileTransfer;
-import intranetchat.core.NetworkInterface;
+import intranetchat.core.FileClient;
+import intranetchat.core.MulticastInterface;
 import intranetchat.core.NetworkListener;
 import intranetchat.core.PrivateChatCollection;
 import intranetchat.core.Sounds;
@@ -52,7 +52,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     SavedValues values;
     DefaultListModel list;
     PrivateChatCollection privateChats;
-    NetworkInterface network;
+    MulticastInterface network;
     Image icon;
     private StyledDocument cDoc;
     public boolean traySupported;
@@ -61,7 +61,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     Sounds sounds;
 
     /** Creates new form MainDisplay */
-    public MainDisplay(Observable obs, NetworkInterface n) {
+    public MainDisplay(Observable obs, MulticastInterface n) {
         userscol = UserCollection.getInstance();
         list = new DefaultListModel();
         log = new StringBuffer("");
@@ -493,21 +493,18 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                         if(resp == JOptionPane.YES_OPTION){
                             //Agreed to the download start the file transfer
                             sendTransferReply("YES");
-                            //start the file transfer client here
+                            Observable obs = new FileClient(breakup[7],Integer.parseInt(breakup[6]));
+                            FileTransferDialog display = new FileTransferDialog(this,false,obs);
+                            display.setDisplay(values.networkName,breakup[4], breakup[5]);
+                            (new Thread((FileClient)obs)).start();
                         }else{
                             //no download to take place
                             sendTransferReply("NO");
                         }
                     }
                     break;
-
-                // a client as responded to a transfer request
-                case 6:
-
-                    break;
             }
         }
-
     }
 
     /**

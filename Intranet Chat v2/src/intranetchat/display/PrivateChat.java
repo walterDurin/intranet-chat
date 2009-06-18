@@ -10,11 +10,9 @@
  */
 
 package intranetchat.display;
-
+import intranetchat.core.MulticastInterface;
 import intranetchat.core.ChatEncryption;
 import intranetchat.core.FileServer;
-import intranetchat.core.FileTransfer;
-import intranetchat.core.NetworkInterface;
 import intranetchat.core.NetworkListener;
 import intranetchat.core.PrivateChatCollection;
 import intranetchat.core.Sounds;
@@ -25,8 +23,11 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Calendar;
+import java.util.Enumeration;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JFileChooser;
@@ -49,7 +50,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     public String destinationID;
     private String destinationName;
     private SavedValues values;
-    private NetworkInterface network;
+    private MulticastInterface network;
     private StringBuffer log;
     private StyledDocument cDoc;
     PrivateChatCollection parent;
@@ -59,7 +60,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
     /** Creates new form PrivateChat */
     public PrivateChat(Observable obs, String id, String name, PrivateChatCollection p) {
         values = SavedValues.getInstance();
-        network = NetworkInterface.getInstance();
+        network = MulticastInterface.getInstance();
         observable = obs;
         observable.addObserver(this);
         destinationID = id;
@@ -114,6 +115,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(400, 350));
 
+        displayArea.setBackground(new java.awt.Color(254, 254, 254));
         displayArea.setEditable(false);
         jScrollPane1.setViewportView(displayArea);
 
@@ -497,11 +499,19 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
      * @return local ip address
      */
     public String getLocalIP(){
-        String address = null;
         try{
-        InetAddress ip = InetAddress.getLocalHost();
-        address = ip.getHostAddress();
-        }catch(UnknownHostException ex){}
-        return address;
+            Enumeration e = NetworkInterface.getNetworkInterfaces();
+            while(e.hasMoreElements()){
+                NetworkInterface n = (NetworkInterface)e.nextElement();
+                Enumeration inet = n.getInetAddresses();
+                while(inet.hasMoreElements()){
+                    InetAddress i = (InetAddress) inet.nextElement();
+                    if((!i.isLoopbackAddress())&&(i.isSiteLocalAddress())){
+                        return i.getHostAddress();
+                    }
+                }
+            }
+        }catch(SocketException ex){}
+        return "";
     }
 }
