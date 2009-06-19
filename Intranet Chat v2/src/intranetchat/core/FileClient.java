@@ -23,13 +23,15 @@ public class FileClient extends Observable implements Runnable{
     private SavedValues values;
     private String ip;
     private int fileSize;
+    private String fileName;
     private int position;
 
-    public FileClient(String ipadd,int fs){
+    public FileClient(String ipadd,int fs,String fN){
         fileSize = fs;
         ip = ipadd;
         values = SavedValues.getInstance();
         position = 0;
+        fileName = fN;
     }
 
     public int getValues(){
@@ -48,7 +50,10 @@ public class FileClient extends Observable implements Runnable{
             do {
                 bytesRead = is.read(mybytearray, current, (mybytearray.length-current));
                 if(bytesRead >= 0) current += bytesRead;
-            } while(bytesRead > -1);
+                position = current;
+                this.setChanged();
+                this.notifyObservers();
+            } while(bytesRead > 0);
             sock.close();
 
             //checks to see if the user automatically saves the file
@@ -62,7 +67,8 @@ public class FileClient extends Observable implements Runnable{
                 int returnValue = chooser.showOpenDialog(null);
                 if(returnValue == JFileChooser.APPROVE_OPTION){
                     File f = chooser.getSelectedFile();
-                    saveFile(mybytearray,f.getAbsolutePath());
+                    String out = f.getAbsolutePath()+"/";
+                    saveFile(mybytearray,out);
                 }else{
                     saveFile(mybytearray,values.savedLocation);
                 }
@@ -76,12 +82,15 @@ public class FileClient extends Observable implements Runnable{
     }
 
     public void saveFile(byte[] file, String path){
+        File f = new File(path+fileName);
         try{
-        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(path));
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(f.getPath()));
         bos.write(file, 0 , file.length);
         bos.flush();
         bos.close();
         }catch(IOException ex){
+            System.out.println("Error Writing File details below");
+            ex.printStackTrace();
         }
     }
 }
