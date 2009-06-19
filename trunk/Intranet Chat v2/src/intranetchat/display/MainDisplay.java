@@ -493,7 +493,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                         if(resp == JOptionPane.YES_OPTION){
                             //Agreed to the download start the file transfer
                             sendTransferReply("YES");
-                            Observable obs = new FileClient(breakup[7],Integer.parseInt(breakup[6]));
+                            Observable obs = new FileClient(breakup[7],Integer.parseInt(breakup[6]),breakup[5]);
                             FileTransferDialog display = new FileTransferDialog(this,false,obs);
                             display.setDisplay(values.networkName,breakup[4], breakup[5],Integer.parseInt(breakup[6]));
                             (new Thread((FileClient)obs)).start();

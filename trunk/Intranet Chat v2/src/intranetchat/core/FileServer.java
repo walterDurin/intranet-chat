@@ -47,7 +47,11 @@ public class FileServer extends Observable implements Runnable{
             os.write(mybytearray,0,mybytearray.length);
             os.flush();
             sock.close();
-        }catch(IOException ex){}
+            servsock.close();
+        }catch(IOException ex){
+            System.out.println("Error with server details below");
+            ex.printStackTrace();
+        }
     }
 
     public boolean getAuthenticated(){
