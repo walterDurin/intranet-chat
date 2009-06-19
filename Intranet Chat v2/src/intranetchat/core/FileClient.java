@@ -82,6 +82,10 @@ public class FileClient extends Observable implements Runnable{
     }
 
     public void saveFile(byte[] file, String path){
+        File p = new File(path);
+        if(!p.isDirectory()){
+            p.mkdir();
+        }
         File f = new File(path+fileName);
         try{
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(f.getPath()));
