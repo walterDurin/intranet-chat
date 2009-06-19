@@ -14,6 +14,7 @@ package intranetchat.display;
 import intranetchat.core.FileClient;
 import intranetchat.core.FileServer;
 import intranetchat.saving.SavedValues;
+import java.awt.Color;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -28,6 +29,9 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
     public FileTransferDialog(java.awt.Frame parent, boolean modal,Observable o) {
         super(parent, modal);
         initComponents();
+        if(o instanceof FileClient){
+            this.setStatus("Transfering ...");
+        }
         o.addObserver(this);
         this.setLocation(values.x, values.y);
     }
@@ -166,6 +170,10 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
                 setStatus("Transfering ...");
             }
             jProgressBar1.setValue(fs.getPosition());
+            if(jProgressBar1.getMaximum() == fs.getPosition()){
+                setStatus("Transfer Complete !");
+                currentStatus.setForeground(Color.GREEN);
+            }
             
 
         }else if(o instanceof FileClient){
