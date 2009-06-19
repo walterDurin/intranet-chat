@@ -9,6 +9,7 @@ package intranetchat.core;
 import intranetchat.display.About;
 import intranetchat.display.MainDisplay;
 import intranetchat.display.Preference;
+import intranetchat.display.StartDisplay;
 import intranetchat.saving.SavedValues;
 import java.awt.AWTException;
 import java.awt.CheckboxMenuItem;
@@ -42,6 +43,8 @@ public class Main {
      * then the network interface is started
      */
     public Main () {
+        StartDisplay d = new StartDisplay();
+        d.setVisible(true);
         values = SavedValues.getInstance();
         values.importValues(SavedValues.DEFAULT_PATH);
         this.startTrayIcon();
@@ -50,7 +53,7 @@ public class Main {
         display = new MainDisplay(obs, network);
         (new Thread((NetworkListener)obs)).start();
         values.ValuesChanged();
-
+        d.setVisible(false);
     }
 
     /**
