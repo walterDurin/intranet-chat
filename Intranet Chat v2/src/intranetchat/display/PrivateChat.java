@@ -489,7 +489,7 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
         //start a file server and display
         Observable obs = new FileServer(f);
         FileTransferDialog display = new FileTransferDialog(this,false,obs);
-        display.setDisplay(destinationName, values.networkName, f.getName());
+        display.setDisplay(destinationName, values.networkName, f.getName(),(int)f.length());
         (new Thread((FileServer)obs)).start();
         //the thread will complete the transfer and then kill it's self
     }

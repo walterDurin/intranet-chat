@@ -23,10 +23,17 @@ public class FileClient extends Observable implements Runnable{
     private SavedValues values;
     private String ip;
     private int fileSize;
+    private int position;
+
     public FileClient(String ipadd,int fs){
         fileSize = fs;
         ip = ipadd;
         values = SavedValues.getInstance();
+        position = 0;
+    }
+
+    public int getValues(){
+        return position;
     }
 
     public void run() {

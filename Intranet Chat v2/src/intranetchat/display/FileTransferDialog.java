@@ -11,7 +11,8 @@
 
 package intranetchat.display;
 
-import intranetchat.core.FileTransfer;
+import intranetchat.core.FileClient;
+import intranetchat.core.FileServer;
 import intranetchat.saving.SavedValues;
 import java.util.Observable;
 import java.util.Observer;
@@ -159,16 +160,31 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
     // End of variables declaration//GEN-END:variables
 
     public void update(Observable o, Object arg) {
-        if(o instanceof FileTransfer){
+        if(o instanceof FileServer){
+            FileServer fs = (FileServer)o;
+            if(fs.getAuthenticated()){
+                setStatus("Transfering ...");
+            }
+            jProgressBar1.setValue(fs.getPosition());
             
+
+        }else if(o instanceof FileClient){
+            FileClient fc = (FileClient)o;
+            jProgressBar1.setValue(fc.getValues());
         }
+            
+
     }
 
-    public void setDisplay(String dest,String source,String filename){
+    public void setStatus(String status){
+        currentStatus.setText(status);
+    }
+
+    public void setDisplay(String dest,String source,String filename,int size){
         destinationName.setText(dest);
         sourceName.setText(source);
         fileName.setText(filename);
-        
+        jProgressBar1.setMaximum(size);
         this.setVisible(true);
     }
 
