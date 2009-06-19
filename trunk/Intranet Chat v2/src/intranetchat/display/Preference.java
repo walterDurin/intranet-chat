@@ -371,7 +371,7 @@ public class Preference extends javax.swing.JDialog {
         gridBagConstraints.gridy = 4;
         gridBagConstraints.ipadx = 24;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(3, 0, 3, 0);
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 0);
         getContentPane().add(jButton1, gridBagConstraints);
 
         jButton2.setText("Cancel");
