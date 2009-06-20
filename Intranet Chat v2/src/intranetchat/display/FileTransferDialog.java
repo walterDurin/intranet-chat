@@ -24,7 +24,8 @@ import java.util.Observer;
  */
 public class FileTransferDialog extends javax.swing.JDialog implements Observer{
     SavedValues values = SavedValues.getInstance();
-
+    Observable obs ;
+    private int size;
     /** Creates new form FileTransferDialog */
     public FileTransferDialog(java.awt.Frame parent, boolean modal,Observable o) {
         super(parent, modal);
@@ -34,6 +35,7 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
         }
         o.addObserver(this);
         this.setLocation(values.x, values.y);
+        obs = o;
     }
 
     /** This method is called from within the constructor to
@@ -148,7 +150,15 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
-        // TODO add your handling code here:
+        if(obs instanceof FileClient){
+            FileClient fc = (FileClient)obs;
+            fc.abortTransfer();
+            this.dispose();
+        }else{
+            FileServer fs = (FileServer)obs;
+            fs.abortTransfer();
+            this.dispose();
+        }
     }//GEN-LAST:event_jButton1MousePressed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel currentStatus;
@@ -170,7 +180,8 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
                 setStatus("Transfering ...");
             }
             jProgressBar1.setValue(fs.getPosition());
-            if(jProgressBar1.getMaximum() == fs.getPosition()){
+            
+            if(size == fs.getPosition()){
                 setStatus("Transfer Complete !");
                 currentStatus.setForeground(Color.GREEN);
             }
@@ -179,6 +190,11 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
         }else if(o instanceof FileClient){
             FileClient fc = (FileClient)o;
             jProgressBar1.setValue(fc.getValues());
+
+            if(size == fc.getValues()){
+                setStatus("Transfer Complete !");
+                currentStatus.setForeground(Color.GREEN);
+            }
         }
             
 
@@ -193,6 +209,7 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
         sourceName.setText(source);
         fileName.setText(filename);
         jProgressBar1.setMaximum(size);
+        this.size = size;
         this.setVisible(true);
     }
 

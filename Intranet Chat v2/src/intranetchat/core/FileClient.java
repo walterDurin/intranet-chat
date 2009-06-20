@@ -25,6 +25,7 @@ public class FileClient extends Observable implements Runnable{
     private int fileSize;
     private String fileName;
     private int position;
+    private boolean abort;
 
     public FileClient(String ipadd,int fs,String fN){
         fileSize = fs;
@@ -32,6 +33,7 @@ public class FileClient extends Observable implements Runnable{
         values = SavedValues.getInstance();
         position = 0;
         fileName = fN;
+        abort = false;
     }
 
     public int getValues(){
@@ -53,9 +55,13 @@ public class FileClient extends Observable implements Runnable{
                 position = current;
                 this.setChanged();
                 this.notifyObservers();
+                //send messages to server about how much has been transferred
             } while(bytesRead > 0);
             sock.close();
 
+            if(abort){
+                return;
+            }
             //checks to see if the user automatically saves the file
             if(values.autoAccept){
                 //the auto accept location has been chosen
@@ -96,5 +102,9 @@ public class FileClient extends Observable implements Runnable{
             System.out.println("Error Writing File details below");
             ex.printStackTrace();
         }
+    }
+
+    public void abortTransfer(){
+        abort = true;
     }
 }
