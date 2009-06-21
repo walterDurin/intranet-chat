@@ -55,7 +55,8 @@ public class FileClient extends Observable implements Runnable{
                 position = current;
                 this.setChanged();
                 this.notifyObservers();
-                //send messages to server about how much has been transferred
+
+
             } while(bytesRead > 0);
             sock.close();
 

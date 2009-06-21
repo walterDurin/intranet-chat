@@ -13,6 +13,7 @@ package intranetchat.display;
 
 import intranetchat.core.FileClient;
 import intranetchat.core.FileServer;
+import intranetchat.core.MulticastInterface;
 import intranetchat.saving.SavedValues;
 import java.awt.Color;
 import java.util.Observable;
@@ -24,6 +25,7 @@ import java.util.Observer;
  */
 public class FileTransferDialog extends javax.swing.JDialog implements Observer{
     SavedValues values = SavedValues.getInstance();
+    MulticastInterface network = MulticastInterface.getInstance();
     Observable obs ;
     private int size;
     /** Creates new form FileTransferDialog */
@@ -212,5 +214,4 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
         this.size = size;
         this.setVisible(true);
     }
-
 }
