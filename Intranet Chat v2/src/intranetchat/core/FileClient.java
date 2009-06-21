@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Observable;
 import javax.swing.JFileChooser;
@@ -47,6 +48,7 @@ public class FileClient extends Observable implements Runnable{
             Socket sock = new Socket(ip,4000);
             byte [] mybytearray  = new byte [fileSize];
             InputStream is = sock.getInputStream();
+            PrintWriter writer = new PrintWriter(sock.getOutputStream(),true);
             bytesRead = is.read(mybytearray,0,mybytearray.length);
             current = bytesRead;
             do {
@@ -55,7 +57,7 @@ public class FileClient extends Observable implements Runnable{
                 position = current;
                 this.setChanged();
                 this.notifyObservers();
-
+                writer.println(current);
 
             } while(bytesRead > 0);
             sock.close();
