@@ -6,9 +6,11 @@
 package intranetchat.core;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -48,6 +50,12 @@ public class FileServer extends Observable implements Runnable{
             OutputStream os = sock.getOutputStream();
             os.write(mybytearray,0,mybytearray.length);
             os.flush();
+            BufferedReader read = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            do{
+                value = Integer.parseInt(read.readLine());
+                this.setChanged();
+                this.notifyObservers();
+            }while(value < (int)outGoing.length());
 
 
             sock.close();
