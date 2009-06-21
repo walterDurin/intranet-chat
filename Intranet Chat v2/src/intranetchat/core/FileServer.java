@@ -22,13 +22,13 @@ import java.util.Observable;
 public class FileServer extends Observable implements Runnable{
     private File outGoing;
     private boolean authenticated;
-    private boolean abort;
+
     private int value;
+    private ServerSocket servsock;
 
     public FileServer(File f){
         outGoing = f;
         authenticated = false;
-        abort = false;
         value = 0;
     }
 
@@ -37,7 +37,7 @@ public class FileServer extends Observable implements Runnable{
      */
     public void run() {
         try{
-            ServerSocket servsock = new ServerSocket(4000);
+            servsock = new ServerSocket(4000);
             Socket sock = servsock.accept();
             authenticated = true;
             this.setChanged();
@@ -48,7 +48,8 @@ public class FileServer extends Observable implements Runnable{
             OutputStream os = sock.getOutputStream();
             os.write(mybytearray,0,mybytearray.length);
             os.flush();
-            //get repsonse from client on how much they have downloaded
+
+
             sock.close();
             servsock.close();
 
@@ -67,7 +68,11 @@ public class FileServer extends Observable implements Runnable{
     }
 
     public void abortTransfer(){
-        abort = true;
+        try{
+            if(!servsock.isClosed()){
+                servsock.close();
+            }
+        }catch(IOException ex){}
     }
 
 
