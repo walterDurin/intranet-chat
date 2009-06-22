@@ -85,8 +85,9 @@ public class FileClient extends Observable implements Runnable{
 
             //File has been transfered and check to see where they want the file placed
         }catch(IOException e){
-            System.out.println("error with client");
-            e.printStackTrace();
+            position = -1;
+            this.setChanged();
+            this.notifyObservers();
         }
     }
 
