@@ -51,7 +51,6 @@ public class MulticastInterface {
         }else{
             networkID = saved.networkID;
         }
-        System.out.println(saved.networkID);
         portNum = saved.port;
         try{
             group = InetAddress.getByName("228.0.0.1");

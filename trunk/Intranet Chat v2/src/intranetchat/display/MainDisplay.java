@@ -326,7 +326,6 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
             if(i != -1){
                 Users s = userscol.getUser(i);
                 if(s.getNetworkID().compareTo(values.networkID+"")!=0){
-                    System.out.println(s.getNetworkID()+" "+s.getUsername());
                     privateChats.startNewPrivateChat(s.getNetworkID(), s.getUsername());
                 }
             }
