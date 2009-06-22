@@ -329,28 +329,42 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
      */
     public void sortMessage(String input){
         String[] mes = input.split("~");
-        //checks to see of the message is a private chat message
-        if(Integer.parseInt(mes[1]) == 3){
-            //checks to see if the message is meant to be read by this certain program
-            if(Integer.parseInt(mes[2]) == values.networkID){
-                //check to see if the message is meant for this private chat window
+
+        //checks to see of the message is a private chat message or system message
+        switch(Integer.parseInt(mes[1])){
+            case 2:
                 if(mes[0].compareTo(destinationID)==0){
-                    //if the name of the user has changed then it will adjust the title of the window
-                    if(mes[4].compareTo(destinationName)!=0){
-                        destinationName = mes[3];
-                        this.setTitle("Private Chat with "+destinationName);
+                    if(Integer.parseInt(mes[3]) == 3){
+                        this.exitConversation();
                     }
-                    //if the message is encrypted it will be sent to the decrypter
-                    if(mes[4].charAt(0)== '^'){
-                        this.appendMessage(getTime()+": "+destinationName+" : "+encrypt.decryptChat(mes[4])+"\n",null);
-                    }else{
-                        this.appendMessage(getTime()+": "+destinationName+" : "+mes[4]+"\n",null);
-                    }
-                    //play the sound to indicate a new message has arrived
-                    sound.newMessageIncoming();
                 }
-            }
+                break;
+
+            case 3:
+                //checks to see if the message is meant to be read by this certain program
+                if(Integer.parseInt(mes[2]) == values.networkID){
+                    //check to see if the message is meant for this private chat window
+                    if(mes[0].compareTo(destinationID)==0){
+                        //if the name of the user has changed then it will adjust the title of the window
+                        if(mes[4].compareTo(destinationName)!=0){
+                            destinationName = mes[3];
+                            this.setTitle("Private Chat with "+destinationName);
+                        }
+                        //if the message is encrypted it will be sent to the decrypter
+                        if(mes[4].charAt(0)== '^'){
+                            this.appendMessage(getTime()+": "+destinationName+" : "+encrypt.decryptChat(mes[4])+"\n",null);
+                        }else{
+                            this.appendMessage(getTime()+": "+destinationName+" : "+mes[4]+"\n",null);
+                        }
+                        //play the sound to indicate a new message has arrived
+                        sound.newMessageIncoming();
+                    }
+                }
+                break;
         }
+
+
+        
 
     }
     /**

@@ -196,6 +196,7 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
             if(size == fc.getValues()){
                 setStatus("Transfer Complete !");
                 currentStatus.setForeground(Color.GREEN);
+                this.dispose();
             }
         }
             
