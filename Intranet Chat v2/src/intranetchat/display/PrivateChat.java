@@ -335,8 +335,11 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
             case 2:
                 if(mes[0].compareTo(destinationID)==0){
                     if(Integer.parseInt(mes[3]) == 3){
-                        appendMessage(getTime()+": "+ destinationName +" has left", values.systemColour);
+                        appendMessage(getTime()+": "+ destinationName + " has left\n", values.systemColour);
                         jTextField1.setEditable(false);
+                    }else if(Integer.parseInt(mes[3]) == 1){
+                        appendMessage(getTime()+": "+ destinationName + " has joined\n", values.systemColour);
+                        jTextField1.setEditable(true);
                     }
                 }
                 break;
