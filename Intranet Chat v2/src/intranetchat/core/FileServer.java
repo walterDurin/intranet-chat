@@ -55,7 +55,7 @@ public class FileServer extends Observable implements Runnable{
                 value = Integer.parseInt(read.readLine());
                 this.setChanged();
                 this.notifyObservers();
-            }while(value < (int)outGoing.length());
+            }while((value < (int)outGoing.length())||value != -1);
 
 
             sock.close();

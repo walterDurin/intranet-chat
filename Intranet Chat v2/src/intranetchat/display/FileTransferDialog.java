@@ -181,7 +181,12 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
             if(fs.getAuthenticated()){
                 setStatus("Transfering ...");
             }
-            jProgressBar1.setValue(fs.getPosition());
+            if(fs.getPosition() != -1){
+                jProgressBar1.setValue(fs.getPosition());
+            }else{
+                setStatus("Transfer Canceled");
+                currentStatus.setForeground(Color.RED);
+            }
             
             if(size == fs.getPosition()){
                 setStatus("Transfer Complete !");
@@ -191,7 +196,12 @@ public class FileTransferDialog extends javax.swing.JDialog implements Observer{
 
         }else if(o instanceof FileClient){
             FileClient fc = (FileClient)o;
-            jProgressBar1.setValue(fc.getValues());
+            if(fc.getValues() != -1){
+                jProgressBar1.setValue(fc.getValues());
+            }else{
+                setStatus("Transfer Cancelled");
+                currentStatus.setForeground(Color.RED);
+            }
 
             if(size == fc.getValues()){
                 setStatus("Transfer Complete !");
