@@ -293,7 +293,10 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_closeWindowsMousePressed
 
     private void AboutMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AboutMouseReleased
+        values.x = this.getX();
+        values.y = this.getY();
         About about = new About(this, false);
+
     }//GEN-LAST:event_AboutMouseReleased
 
     private void exitMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseReleased
@@ -316,6 +319,8 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
 
     private void usersMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersMouseReleased
         //user wants to have a private chat with a mate
+        values.x = this.getX();
+        values.y = this.getY();
         if((evt.getClickCount() == 2)&&(evt.getButton() == MouseEvent.BUTTON1)){
             int i = users.getSelectedIndex();
             if(i != -1){
@@ -335,7 +340,10 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_outgoingDataKeyPressed
 
     private void jMenuItem1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MousePressed
+        values.x = this.getX();
+        values.y = this.getY();
         Preference preferences = new Preference(this,false);
+
     }//GEN-LAST:event_jMenuItem1MousePressed
 
     private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
