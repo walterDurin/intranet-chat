@@ -335,7 +335,8 @@ public class PrivateChat extends javax.swing.JFrame implements Observer{
             case 2:
                 if(mes[0].compareTo(destinationID)==0){
                     if(Integer.parseInt(mes[3]) == 3){
-                        this.exitConversation();
+                        appendMessage(getTime()+": "+ destinationName +" has left", values.systemColour);
+                        jTextField1.setEditable(false);
                     }
                 }
                 break;
