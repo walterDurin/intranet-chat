@@ -310,9 +310,6 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
             if(s != null){
                 values.networkName = s;
                 values.ValuesChanged();
-                try{
-                    network.sendMulticast("2~"+values.networkName+"~2~");
-                }catch(IOException e){}
             }
         }
     }//GEN-LAST:event_userNameMouseClicked
@@ -574,7 +571,12 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         this.setFontType(values.font);
         this.setBackgroundColour(values.background);
         this.setForegroundColour(values.foreGround);
-        this.userName.setText(values.networkName);
+        if(userName.getText().compareTo(values.networkName)!=0){
+            this.userName.setText(values.networkName);
+            try{
+                network.sendMulticast("2~"+values.networkName+"~2~");
+            }catch(IOException e){}
+        }
         this.setDisplayLF(values.landf);
         this.pack();
     }

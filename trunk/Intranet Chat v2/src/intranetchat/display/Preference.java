@@ -505,7 +505,11 @@ public class Preference extends javax.swing.JDialog {
     }
 
     private void saveData(){
-        values.networkName = username.getText();
+        if(values.networkName.compareTo(username.getText())!= 0){
+            values.networkName = username.getText();
+
+        }
+
         values.port = Integer.parseInt(jTextField1.getText());
         values.privateLog = privateLog.isSelected();
         values.publicLog = publicLog.isSelected();
