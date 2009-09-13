@@ -47,10 +47,10 @@ public class Main {
         d.setVisible(true);
         values = SavedValues.getInstance();
         values.importValues(SavedValues.DEFAULT_PATH);
-        this.startTrayIcon();
         MulticastInterface network = MulticastInterface.getInstance();
         Observable obs = new NetworkListener();
         display = new MainDisplay(obs, network);
+        this.startTrayIcon();
         (new Thread((NetworkListener)obs)).start();
         values.ValuesChanged();
         d.setVisible(false);
