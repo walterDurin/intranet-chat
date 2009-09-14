@@ -332,6 +332,9 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     private void outgoingDataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_outgoingDataKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             this.sendMessage();
+        }else if((evt.getKeyCode() == KeyEvent.VK_C)&&(evt.getModifiers() == KeyEvent.ALT_MASK)){
+            incomingData.setText("");
+            log.append("*** Screen Cleared *** \n");
         }
     }//GEN-LAST:event_outgoingDataKeyPressed
 
