@@ -138,6 +138,11 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                 formWindowStateChanged(evt);
             }
         });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
@@ -330,11 +335,18 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_usersMouseReleased
 
     private void outgoingDataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_outgoingDataKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        switch(evt.getKeyCode()){
+            
+            case KeyEvent.VK_ENTER:
             this.sendMessage();
-        }else if((evt.getKeyCode() == KeyEvent.VK_C)&&(evt.getModifiers() == KeyEvent.ALT_MASK)){
-            incomingData.setText("");
-            log.append("*** Screen Cleared *** \n");
+                break;
+            case KeyEvent.VK_C:
+                if(evt.getModifiers() == KeyEvent.ALT_MASK){
+                    incomingData.setText("");
+                    log.append("*** Screen Cleared *** \n");
+                }
+                break;
+                
         }
     }//GEN-LAST:event_outgoingDataKeyPressed
 
@@ -352,6 +364,10 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
 
     }//GEN-LAST:event_formComponentMoved
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem About;
