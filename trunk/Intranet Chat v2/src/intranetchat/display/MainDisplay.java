@@ -300,7 +300,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     private void AboutMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AboutMouseReleased
         values.x = this.getX();
         values.y = this.getY();
-        About about = new About(this, false);
+        new About(this, false);
 
     }//GEN-LAST:event_AboutMouseReleased
 
@@ -310,7 +310,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_exitMouseReleased
 
     private void userNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userNameMouseClicked
-        if(evt.getClickCount() ==2){
+        if(evt.getClickCount() == 2){
             String s = JOptionPane.showInputDialog(this, "Please Enter your new username", "New Username", JOptionPane.QUESTION_MESSAGE);
             if(s != null){
                 values.networkName = s;
@@ -335,17 +335,40 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_usersMouseReleased
 
     private void outgoingDataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_outgoingDataKeyPressed
+        int keyMods = evt.getModifiers();
         switch(evt.getKeyCode()){
             
-            case KeyEvent.VK_ENTER:
+            case KeyEvent.VK_ENTER://Checks to see if the enter button has been pressed
             this.sendMessage();
                 break;
-            case KeyEvent.VK_C:
-                if(evt.getModifiers() == KeyEvent.ALT_MASK){
+                
+            case KeyEvent.VK_C://Checks to see if the letter C has been pressed
+                if(keyMods == KeyEvent.ALT_MASK){
                     incomingData.setText("");
                     log.append("*** Screen Cleared *** \n");
                 }
                 break;
+
+            case KeyEvent.VK_P://Checks to see if the letter P has been pressed
+                if(keyMods == KeyEvent.ALT_MASK){
+                    int i = users.getSelectedIndex();
+                    if(i != -1){
+                        values.x = this.getX();
+                        values.y = this.getY();
+                        Users s = userscol.getUser(i);
+                        if(s.getNetworkID().compareTo(values.networkID+"")!=0){
+                            privateChats.startNewPrivateChat(s.getNetworkID(), s.getUsername());
+                        }
+                    }
+                }
+                break;
+
+            case KeyEvent.VK_X://Checks to see if the letter X has been pressed
+                if(keyMods == KeyEvent.ALT_MASK) {
+                    this.saving();
+                    System.exit(0);
+                }break;
+
                 
         }
     }//GEN-LAST:event_outgoingDataKeyPressed
@@ -353,7 +376,7 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
     private void jMenuItem1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MousePressed
         values.x = this.getX();
         values.y = this.getY();
-        Preference preferences = new Preference(this,false);
+        new Preference(this,false);
 
     }//GEN-LAST:event_jMenuItem1MousePressed
 

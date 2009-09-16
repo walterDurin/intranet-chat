@@ -164,6 +164,7 @@ public class SavedValues extends Observable {
      * This will alert all of the observers that the values have been changed
      */
     public void ValuesChanged(){
+
         this.setChanged();
         this.notifyObservers();
     }
