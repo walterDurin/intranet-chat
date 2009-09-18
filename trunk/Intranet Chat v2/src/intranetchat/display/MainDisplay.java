@@ -43,7 +43,7 @@ import javax.swing.text.StyledDocument;
 /**
  * This class is the main display class for the entire program
  * @author Philip White
- * @version 1.0
+ * @version 1.1
  *
  */
 public class MainDisplay extends javax.swing.JFrame implements Observer{
