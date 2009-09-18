@@ -314,7 +314,11 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
             String s = JOptionPane.showInputDialog(this, "Please Enter your new username", "New Username", JOptionPane.QUESTION_MESSAGE);
             if(s != null){
                 values.networkName = s;
-                values.ValuesChanged();
+                this.userName.setText(s);
+                try{
+                    network.sendMulticast("2~"+values.networkName+"~2~");
+                }catch(IOException e){}
+                
             }
         }
     }//GEN-LAST:event_userNameMouseClicked
