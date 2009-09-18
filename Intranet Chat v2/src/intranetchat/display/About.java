@@ -78,9 +78,9 @@ public class About extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
         getContentPane().add(jPanel1, gridBagConstraints);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 153, 51));
-        jLabel1.setText("IntraNet Chat 2.0.0");
+        jLabel1.setText("IntraNet Chat 2.0.1");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
