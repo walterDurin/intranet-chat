@@ -318,7 +318,6 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
                 try{
                     network.sendMulticast("2~"+values.networkName+"~2~");
                 }catch(IOException e){}
-                
             }
         }
     }//GEN-LAST:event_userNameMouseClicked
