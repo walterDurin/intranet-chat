@@ -51,9 +51,9 @@ public class Main {
         Observable obs = new NetworkListener();
         display = new MainDisplay(obs, network);
         this.startTrayIcon();
-        (new Thread((NetworkListener)obs)).start();
         values.ValuesChanged();
         d.setVisible(false);
+        (new Thread((NetworkListener)obs)).start();
     }
 
     /**
