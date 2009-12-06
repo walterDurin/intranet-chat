@@ -16,7 +16,8 @@ import java.util.Observable;
  */
 public class SavedValues extends Observable {
 
-    public static final String DEFAULT_PATH = "./inc.sets";
+    public static final String DEFAULT_PATH = System.getProperty("user.home")+"\\inc.sets";
+
     private static SavedValues instance;
     private ReadFiles reader;
     private WriteFiles writer;
@@ -123,6 +124,7 @@ public class SavedValues extends Observable {
     public void importValues(String path){
         if(reader.checkFilePresence(path)){
             String s = reader.readFile(path);
+            System.out.println(s);
             updateValues(s);
         }else{
             exportValues(path);
