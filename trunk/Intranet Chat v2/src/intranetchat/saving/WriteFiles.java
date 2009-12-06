@@ -33,7 +33,7 @@ public class WriteFiles {
             writer.flush();
             writer.close();
         }catch(IOException ex){
-            System.out.println("error");
+            System.out.println("writing error");
         }
 
     }
