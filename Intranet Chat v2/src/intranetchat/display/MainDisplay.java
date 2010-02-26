@@ -685,7 +685,8 @@ public class MainDisplay extends javax.swing.JFrame implements Observer{
         values.networkName = userName.getText();
         values.x = this.getX();
         values.y = this.getY();
-        values.exportValues(SavedValues.DEFAULT_PATH);
+        SavedValues saved = SavedValues.getInstance();
+        values.exportValues(saved.DEFAULT_PATH);
         try{
         network.sendMulticast("2~"+values.networkName+"~3~");
         }catch(IOException ex){}
