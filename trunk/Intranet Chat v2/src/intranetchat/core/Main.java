@@ -46,7 +46,14 @@ public class Main {
         StartDisplay d = new StartDisplay();
         d.setVisible(true);
         values = SavedValues.getInstance();
-        values.importValues(SavedValues.DEFAULT_PATH);
+        String os = System.getProperty("os.name");
+        if(os.compareTo("Windows 7")==0||os.compareTo("Windows Vista")==0||os.compareTo("Windows XP")==0){
+            values.DEFAULT_PATH = System.getProperty("user.home")+"\\inc.sets";
+            
+        }else{
+            values.DEFAULT_PATH = "~\\inc\\inc.sets";
+        }
+        values.importValues(values.DEFAULT_PATH);
         MulticastInterface network = MulticastInterface.getInstance();
         Observable obs = new NetworkListener();
         display = new MainDisplay(obs, network);
